@@ -19,6 +19,7 @@ class NameRouts {
   static const String shopingBasketScreen = '/shopingBasket';
   static const String signinMobile = '/signin';
   static const String endOrderScreen = '/endOrder';
+
 }
 
 class PageRout {
@@ -29,8 +30,9 @@ class PageRout {
     GetPage(name: NameRouts.loginscreen, page: () => LoginScreen()),
     GetPage(name: NameRouts.reservetable, page: () => ReserveTable()),
     GetPage(name: NameRouts.singleScreen, page: () => SingleScreen()),
-    GetPage(name: NameRouts.shopingBasketScreen, page: () => ShopingBasketScreen()),
-    GetPage(name: NameRouts.signinMobile, page: () => SigninMobile()),
+    GetPage(name: NameRouts.shopingBasketScreen, page: () => ShoppingBasketScreen()),
+    GetPage(name: NameRouts.signinMobile, page: () => SignInMobile()),
     GetPage(name: NameRouts.endOrderScreen, page: () => EndOrderScreen()),
+
   ];
 }

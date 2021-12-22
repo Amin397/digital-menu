@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'end_order_controller/end_order_controller.dart';
-import 'end_order_widgets/alert_end_order_widget.dart';
+import 'Controller/end_order_controller.dart';
+import 'Widgets/alert_end_order_widget.dart';
 
 class EndOrderScreen extends StatelessWidget {
   final EndOrderController endOrderController = Get.put(EndOrderController());
+
+  EndOrderScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -45,6 +45,7 @@ dependencies:
   convex_bottom_bar: ^3.0.0
   flutter_svg: ^0.22.0
   pin_code_fields: ^7.3.0
+  flutter_easyloading: ^3.0.3
 
 
 

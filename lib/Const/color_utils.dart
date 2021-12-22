@@ -15,7 +15,7 @@ class ColorUtils{
   static const Color colorDeepGrey = Color(0xff383A3F);
   static const Color bestBack = Color(0xffecddc9);
   static const Color snappGreen = Color(0xff39E239);
-  static const Color deleteRed = Color(0xffEE2E18);
+  static const Color mainRed = Color(0xffB72828);
   static const Color green = Color(0xff21CC3D);
   static const Color editGreen = Color(0xff67DE7B);
   static const Color pink = Color(0xffEC26BE);

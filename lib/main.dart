@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'Const/color_utils.dart';
 import 'MainModels/get_routs.dart';
 
 void main() async {
@@ -35,30 +37,30 @@ void main() async {
         theme: ThemeData(
           fontFamily: 'iranSanc',
         ),
-        // builder: EasyLoading.init(),
+        builder: EasyLoading.init(),
       ),
     ),
   );
   // configLoading();
 }
 
-// void configLoading() {
-//   EasyLoading.instance
-//     ..displayDuration = const Duration(milliseconds: 2000)
-//     ..indicatorType = EasyLoadingIndicatorType.cubeGrid
-//     ..loadingStyle = EasyLoadingStyle.custom
-//     ..indicatorSize = 45.0
-//     ..radius = 10.0
-//     ..userInteractions = false
-//     ..dismissOnTap = false
-//     ..indicatorSize = 100.0
-//     ..fontSize = 18.0
-//     ..progressColor = ColorUtils.splash
-//     ..backgroundColor = Colors.transparent
-//     ..indicatorColor = ColorUtils.splash
-//     ..textColor = Colors.white
-//   // ..maskColor = Colors.blue
-//     ..maskType = EasyLoadingMaskType.black
-//     ..userInteractions = true
-//     ..dismissOnTap = true;
-// }
+void configLoading() {
+  EasyLoading.instance
+    ..displayDuration = const Duration(milliseconds: 2000)
+    ..indicatorType = EasyLoadingIndicatorType.cubeGrid
+    ..loadingStyle = EasyLoadingStyle.custom
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..userInteractions = false
+    ..dismissOnTap = false
+    ..indicatorSize = 100.0
+    ..fontSize = 18.0
+    ..progressColor = ColorUtils.splash
+    ..backgroundColor = Colors.transparent
+    ..indicatorColor = ColorUtils.splash
+    ..textColor = Colors.white
+  // ..maskColor = Colors.blue
+    ..maskType = EasyLoadingMaskType.black
+    ..userInteractions = true
+    ..dismissOnTap = true;
+}

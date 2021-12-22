@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'signin_controller/login_controller.dart';
-import 'signin_widgets/background_signin_widget.dart';
-import 'signin_widgets/finishd_button_widget.dart';
 
-class SigninMobile extends StatelessWidget {
-  SigninMobile({Key? key}) : super(key: key);
+import 'Controller/login_controller.dart';
+import 'Widgets/background_signin_widget.dart';
+import 'Widgets/finishd_button_widget.dart';
+
+class SignInMobile extends StatelessWidget {
+  SignInMobile({Key? key}) : super(key: key);
 
   final SigninMobileController loginController =
       Get.put(SigninMobileController());
@@ -16,18 +17,18 @@ class SigninMobile extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor:Colors.white,
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: Container(
             height: Get.height,
             width: Get.width,
             color: Colors.white,
             child: Column(
-              children: [
+              children: const [
                 Expanded(
-                  child: BackGroundSignin(),
+                  child: BackGroundSignIn(),
                 ),
-                SigninFinishdButton(),
+                SignInFinishedButton(),
               ],
             ),
           ),
@@ -35,6 +36,4 @@ class SigninMobile extends StatelessWidget {
       ),
     );
   }
-
-
 }

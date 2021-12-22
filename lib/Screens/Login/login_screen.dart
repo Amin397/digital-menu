@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:untitled13/Screens/Login/login_widgets/login_field.dart';
-import 'login_controller/login_controller.dart';
-import 'login_widgets/pincode_field.dart';
-import 'login_widgets/top_part_login_screen.dart';
+import 'package:untitled13/Const/color_utils.dart';
+import 'package:untitled13/Screens/Login/widgets/login_field.dart';
+import 'package:untitled13/Screens/Login/widgets/pincode_field.dart';
+import 'package:untitled13/Screens/Login/widgets/top_part_login_screen.dart';
+import 'controller/login_controller_amin_khademi.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({
@@ -21,7 +22,7 @@ class LoginScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: SafeArea(
-          child: Container(
+          child: SizedBox(
             height: Get.height,
             width: Get.width,
             child: Column(
@@ -32,14 +33,14 @@ class LoginScreen extends StatelessWidget {
                     child: Container(
                       height: double.maxFinite,
                       width: double.maxFinite,
-                      color: const Color(0xffB72828),
+                      color: ColorUtils.mainRed,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TopPartLoginScreen(
                             loginController: loginController,
                           ),
-                          Container(
+                          SizedBox(
                             height: Get.height * .42,
                             width: Get.width * .8,
                             child: PageView(
@@ -47,18 +48,15 @@ class LoginScreen extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               controller: loginController.pageViewController,
                               children: [
-
-
-
                                 Center(
-                                  child: Container(
+                                  child: SizedBox(
                                     height: Get.height * .3,
                                     width: Get.width * .8,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
+                                        SizedBox(
                                           height: Get.height * .1,
                                           width: Get.width * .8,
                                           child: Column(
@@ -68,41 +66,50 @@ class LoginScreen extends StatelessWidget {
                                               const Align(
                                                 alignment: Alignment.center,
                                                 child: AutoSizeText(
-                                                  "شماره مبایل خود را وارد کنید",
+                                                  "شماره موبایل خود را وارد کنید",
                                                   style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 18),
+                                                    color: Colors.white,
+                                                    fontSize: 18,
+                                                  ),
                                                 ),
                                               ),
                                               Container(
                                                 height: Get.height * .05,
                                                 width: Get.width,
-
                                                 padding: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        Get.width * .04),
+                                                  horizontal: Get.width * .04,
+                                                ),
                                                 margin: EdgeInsets.symmetric(
-                                                    horizontal:
-                                                        Get.width * .06),
+                                                  horizontal: Get.width * .06,
+                                                ),
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
                                                       color: Colors.white,
                                                       width: 3),
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                          Get.height * .032),
+                                                    Get.height * .032,
+                                                  ),
                                                 ),
                                                 child: TextField(
                                                   autofocus: false,
-                                                  controller: loginController.mobileTextfieldController,
+                                                  controller: loginController
+                                                      .mobileTextfieldController,
                                                   textAlign: TextAlign.left,
-                                                  inputFormatters: [LengthLimitingTextInputFormatter(11),],
-                                                  decoration: const InputDecoration(
-                                                      border: InputBorder.none,
-                                                      hintText:
-                                                          " 000 000 000 +98",
-                                                      hintStyle: TextStyle(
-                                                          color: Colors.white)),
+                                                  inputFormatters: [
+                                                    LengthLimitingTextInputFormatter(
+                                                      11,
+                                                    ),
+                                                  ],
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border: InputBorder.none,
+                                                    hintText:
+                                                        " 000 000 000 +98",
+                                                    hintStyle: TextStyle(
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
                                                   style: const TextStyle(
                                                     color: Colors.white,
                                                   ),
@@ -113,7 +120,7 @@ class LoginScreen extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                        Container(
+                                        SizedBox(
                                           height: Get.height * .1,
                                           width: Get.width * .8,
                                           child: Center(
@@ -122,11 +129,11 @@ class LoginScreen extends StatelessWidget {
                                               builder: (_) => GestureDetector(
                                                 onTap: () {
                                                   if (loginController
-                                                          .whichPage == 2 ){
-                                                      // 2 && loginController.mobileTextfieldController) {
+                                                          .whichPage ==
+                                                      2) {
+                                                    // 2 && loginController.mobileTextfieldController) {
                                                     loginController
                                                         .getLoginAPI();
-
                                                   } else if (loginController
                                                           .whichPage ==
                                                       3) {
@@ -138,10 +145,12 @@ class LoginScreen extends StatelessWidget {
                                                   height: Get.height * .047,
                                                   width: Get.width * .4,
                                                   decoration: BoxDecoration(
-                                                    color: const Color(0xffE29805),
+                                                    color:
+                                                        const Color(0xffE29805),
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            Get.height * .03),
+                                                      Get.height * .03,
+                                                    ),
                                                     boxShadow: [
                                                       BoxShadow(
                                                         color: Colors.black
@@ -170,13 +179,13 @@ class LoginScreen extends StatelessWidget {
                                       ],
                                     ),
                                   ),
-
                                 ),
                                 PassWordLoginField(
                                   loginController: loginController,
                                 ),
                                 PinCodeLoginField(
-                                    loginController: loginController),
+                                  loginController: loginController,
+                                ),
                               ],
                             ),
                           ),
@@ -198,8 +207,9 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(top: Get.height * .016),
+                                  padding: EdgeInsets.only(
+                                    top: Get.height * .016,
+                                  ),
                                   child: ClipPath(
                                     clipper: CustomClipPath2(),
                                     child: Container(
@@ -211,8 +221,9 @@ class LoginScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(top: Get.height * .032),
+                                  padding: EdgeInsets.only(
+                                    top: Get.height * .032,
+                                  ),
                                   child: ClipPath(
                                     clipper: CustomClipPath2(),
                                     child: Container(
@@ -240,12 +251,12 @@ class LoginScreen extends StatelessWidget {
   }
 
   Widget bottomPictureLogin() {
-    return Container(
+    return SizedBox(
       height: Get.height * .14,
       width: Get.width,
       child: Align(
         alignment: Alignment.topCenter,
-        child: Container(
+        child: SizedBox(
           height: Get.height * .12,
           width: Get.width,
           child: const Image(

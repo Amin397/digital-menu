@@ -2,19 +2,18 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:untitled13/Screens/RegisterScreen/register_controller/register_controller.dart';
-import 'register_widgets/chose_adress_register.dart';
-import 'register_widgets/finished_button_register.dart';
-import 'register_widgets/mobile_number_textfield_register.dart';
-import 'register_widgets/name_textfield_register.dart';
-import 'register_widgets/top_part_of_register.dart';
+import 'package:untitled13/Const/color_utils.dart';
+import 'Controller/register_controller.dart';
+import 'Widgets/chose_adress_register.dart';
+import 'Widgets/finished_button_register.dart';
+import 'Widgets/mobile_number_textfield_register.dart';
+import 'Widgets/name_textfield_register.dart';
+import 'Widgets/top_part_of_register.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
 
   final RegisterController registerController = Get.put(RegisterController());
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class RegisterScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: SafeArea(
-          child: Container(
+          child: SizedBox(
             height: Get.height,
             width: Get.width,
             child: Column(
@@ -33,22 +32,21 @@ class RegisterScreen extends StatelessWidget {
                   child: Container(
                     height: double.maxFinite,
                     width: double.maxFinite,
-                    color: Color(0xffB72828),
+                    color: ColorUtils.mainRed,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TopPartOfRegister(
-                            registerController: registerController),
-                        Container(
+                          registerController: registerController,
+                        ),
+                        SizedBox(
                           height: Get.height * .45,
                           width: Get.width * .8,
                           child: Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-
-
-                                Container(
+                                SizedBox(
                                   height: Get.height * .06,
                                   width: Get.height * .5,
                                   child: Row(
@@ -63,48 +61,43 @@ class RegisterScreen extends StatelessWidget {
                                       ),
                                       Flexible(
                                         flex: 1,
-                                        child: Container(
+                                        child: SizedBox(
                                           height: double.maxFinite,
                                           width: double.maxFinite,
                                           child: Column(
                                             children: [
                                               Container(
-                                                height: Get.height *
-                                                    .015,
+                                                height: Get.height * .015,
                                                 width: Get.width,
-                                                color: Colors
-                                                    .transparent,
+                                                color: Colors.transparent,
                                               ),
-                                              Container(
-                                                height: Get.height *
-                                                    .04,
+                                              SizedBox(
+                                                height: Get.height * .04,
                                                 width: Get.width,
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    Icon(
+                                                    const Icon(
                                                       Icons.edit,
-                                                      color: Colors
-                                                          .white,
+                                                      color: Colors.white,
                                                     ),
                                                     AutoSizeText(
-                                                      registerController.whichPage["mobileTextfieldController"].toString(),
-                                                      style:
-                                                      TextStyle(
-                                                        color: Colors
-                                                            .white,
-                                                        fontSize:
-                                                        16,
+                                                      registerController
+                                                          .whichPage[
+                                                              "mobileTextfieldController"]
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                               Container(
-                                                height: Get.height *
-                                                    .0015,
+                                                height: Get.height * .0015,
                                                 width: Get.width,
                                                 color: Colors.white,
                                               ),
@@ -116,7 +109,9 @@ class RegisterScreen extends StatelessWidget {
                                   ),
                                 ),
 
-
+                                // TextButton(onPressed: (){
+                                //   registerController.getCustomerInfo();
+                                // }, child: Text('test')),
                                 NameTextFieldRegister(
                                   registerController: registerController,
                                 ),
@@ -182,15 +177,15 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                 )),
-                Container(
+                SizedBox(
                   height: Get.height * .14,
                   width: Get.width,
                   child: Align(
                     alignment: Alignment.topCenter,
-                    child: Container(
+                    child: SizedBox(
                       height: Get.height * .12,
                       width: Get.width,
-                      child: Image(
+                      child: const Image(
                         fit: BoxFit.fill,
                         image: AssetImage(
                           'assets/images/LoginPicture.png',

@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:untitled13/Screens/Single/single_screen_widgets/sub_category_foods_single_widgets.dart';
-import 'single_controller/single_controller.dart';
-import 'single_screen_widgets/appbar_single.dart';
-import 'single_screen_widgets/category_foods_single_widgets.dart';
-import 'single_screen_widgets/finished_button_single.dart';
+
+import 'Controller/single_controller.dart';
+import 'Widgets/appbar_single.dart';
+import 'Widgets/category_foods_single_widgets.dart';
+import 'Widgets/finished_button_single.dart';
+import 'Widgets/sub_category_foods_single_widgets.dart';
 
 class SingleScreen extends StatelessWidget {
   SingleScreen({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class SingleScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: SafeArea(
-          child: Container(
+          child: SizedBox(
             height: Get.height,
             width: Get.width,
             child: Column(
@@ -27,9 +28,7 @@ class SingleScreen extends StatelessWidget {
                   child: Container(
                     height: double.maxFinite,
                     width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
+                    color: Colors.white,
                     child: Column(
                       children: [
                         AppBarSingle(singleController: singleController),
@@ -62,7 +61,9 @@ class SingleScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                FinishedButtonSingle(singleController: singleController),
+                FinishedButtonSingle(
+                  singleController: singleController,
+                ),
               ],
             ),
           ),

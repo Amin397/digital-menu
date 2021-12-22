@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:untitled13/Screens/ShopingBasket/shoping_basket_widgets/order_list_shoping_basket.dart';
-import 'shoping_basket_controller/shoping_basket_controller.dart';
-import 'shoping_basket_widgets/appbar_shoping_basket.dart';
-import 'shoping_basket_widgets/finished_button_order_shoping_basket.dart';
-import 'shoping_basket_widgets/modal_reserve_table_widget.dart';
-import 'shoping_basket_widgets/sum_price_order_shoping_basket.dart';
 
-class ShopingBasketScreen extends StatelessWidget {
-  ShopingBasketScreen({Key? key}) : super(key: key);
+import 'Controller/shoping_basket_controller.dart';
+import 'Widgets/appbar_shoping_basket.dart';
+import 'Widgets/finished_button_order_shoping_basket.dart';
+import 'Widgets/modal_reserve_table_widget.dart';
+import 'Widgets/order_list_shoping_basket.dart';
+import 'Widgets/sum_price_order_shoping_basket.dart';
 
-  final ShopingBasketController shopingBasketController =
-      Get.put(ShopingBasketController());
+class ShoppingBasketScreen extends StatelessWidget {
+  ShoppingBasketScreen({Key? key}) : super(key: key);
+
+  final ShoppingBasketController shoppingBasketController =
+      Get.put(ShoppingBasketController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,11 @@ class ShopingBasketScreen extends StatelessWidget {
                   child: Container(
                     height: double.maxFinite,
                     width: double.maxFinite,
-                    decoration: BoxDecoration(
                       color: Colors.white,
-                    ),
                     child: Column(
                       children: [
-                        AppBarShopingBasket(
-                            shopingBasketController: shopingBasketController),
+                        AppBarShoppingBasket(
+                            shoppingBasketController: shoppingBasketController,),
                         SizedBox(
                           height: Get.height * .05,
                         ),
@@ -47,13 +46,13 @@ class ShopingBasketScreen extends StatelessWidget {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              OrderListShopingBasket(
-                                shopingBasketController:
-                                    shopingBasketController,
+                              OrderListShoppingBasket(
+                                shoppingBasketController:
+                                    shoppingBasketController,
                               ),
-                              SumPriceOrderShopingBasket(
-                                shopingBasketController:
-                                    shopingBasketController,
+                              SumPriceOrderShoppingBasket(
+                                shoppingBasketController:
+                                    shoppingBasketController,
                               ),
                             ],
                           ),
@@ -61,22 +60,22 @@ class ShopingBasketScreen extends StatelessWidget {
                         SizedBox(
                           height: Get.height * .04,
                         ),
-                        (shopingBasketController.whichPage == 2)
+                        (shoppingBasketController.whichPage == 2)
                             ? Container(
                                 color: Colors.transparent,
                                 height: Get.height * .05,
                                 width: Get.height * .1,
                               )
-                            : ModalReserveTableShopingBasket(
-                                shopingBasketController:
-                                    shopingBasketController,
+                            : ModalReserveTableShoppingBasket(
+                                shoppingBasketController:
+                                    shoppingBasketController,
                               ),
                       ],
                     ),
                   ),
                 ),
-                FinishedButtonOrderShopingBasket(
-                    shopingBasketController: shopingBasketController),
+                FinishedButtonOrderShoppingBasket(
+                    shoppingBasketController: shoppingBasketController),
               ],
             ),
           ),
