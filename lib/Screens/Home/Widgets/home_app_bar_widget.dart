@@ -15,11 +15,11 @@ class HomeAppBar extends StatelessWidget {
   Widget homeAppBar() {
     return GestureDetector(
       onTap: () {
-        if (homeController!.whichPage == 1) {
+        // if (homeController!.whichPage == 1) {
           Get.back();
-        } else if (homeController!.whichPage == 3) {
-          Get.back();
-        }
+        // } else if (homeController!.whichPage == 3) {
+        //   Get.back();
+        // }
       },
       child: Container(
         height: Get.height * .06,

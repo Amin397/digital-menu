@@ -2,6 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Screens/SelectKindOrder/Controller/select_kind_order_controller.dart';
 
 class TopPictureSelectKindOrder extends StatelessWidget {
@@ -38,11 +39,11 @@ class TopPictureSelectKindOrder extends StatelessWidget {
                   Get.height * .08,
                 ),
               ),
-              child: (selectKindOrderController!.model!.image!.length > 10)
+              child: (Blocs.shop.shopModel!.image!.length > 10)
                   ? Image(
                       fit: BoxFit.fill,
                       image: NetworkImage(
-                        selectKindOrderController!.model!.image!,
+                        Blocs.shop.shopModel!.image!,
                       ),
                     )
                   : const Image(
@@ -71,7 +72,7 @@ class TopPictureSelectKindOrder extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.only(top: Get.height * .08),
             child: AutoSizeText(
-              selectKindOrderController!.model!.brandName.toString(),
+              Blocs.shop.shopModel!.brandName.toString(),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 22,

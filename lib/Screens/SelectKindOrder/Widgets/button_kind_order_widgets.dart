@@ -2,6 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Screens/SelectKindOrder/Controller/select_kind_order_controller.dart';
 
 class ButtonSelectKindOrder extends StatelessWidget {
@@ -21,7 +22,7 @@ class ButtonSelectKindOrder extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          (selectKindOrderController!.model!.orderInResturant == 1)?GestureDetector(
+          (Blocs.shop.shopModel!.orderInResturant == 1)?GestureDetector(
             onTap: () {
               selectKindOrderController!.pressInSideOrder();
             },
@@ -56,7 +57,7 @@ class ButtonSelectKindOrder extends StatelessWidget {
               ),
             ),
           ):Container(),
-          (selectKindOrderController!.model!.orderWithDelivery == 1)?GestureDetector(
+          (Blocs.shop.shopModel!.orderWithDelivery == 1)?GestureDetector(
             onTap: () {
               selectKindOrderController!.pressOutSideOrder();
             },
@@ -91,7 +92,7 @@ class ButtonSelectKindOrder extends StatelessWidget {
               ),
             ),
           ):Container(),
-          (selectKindOrderController!.model!.tableReservation == 1)?GestureDetector(
+          (Blocs.shop.shopModel!.tableReservation == 1)?GestureDetector(
             onTap: () {
               selectKindOrderController!.pressInSideReserveTableOrder();
             },

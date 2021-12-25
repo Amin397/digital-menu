@@ -2,7 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:untitled13/Screens/Home/Model/home_model.dart';
+import 'package:untitled13/Screens/Home/Model/contractor_sub_category_model.dart';
 import 'package:untitled13/Screens/Single/Controller/single_controller.dart';
 
 class CategoryFoodsSingle extends StatelessWidget {
@@ -19,22 +19,22 @@ class CategoryFoodsSingle extends StatelessWidget {
     return SizedBox(
       height: Get.height * .13,
       width: Get.width,
-      child: PageView.builder(
-        controller: singleController!.pageController,
-        scrollDirection: Axis.horizontal,
-        onPageChanged: (page) {
-          singleController!.changePage(page);
-        },
-        itemCount: singleController!.cardsList.length,
-        itemBuilder: (context, index) => _buildTabBarList(
-          item: singleController!.cardsList[index],
-          index: index,
-        ),
-      ),
+      // child: PageView.builder(
+      //   controller: singleController!.pageController,
+      //   scrollDirection: Axis.horizontal,
+      //   onPageChanged: (page) {
+      //     singleController!.changePage(page);
+      //   },
+      //   itemCount: singleController!.cardsList.length,
+      //   itemBuilder: (context, index) => _buildTabBarList(
+      //     item: singleController!.cardsList[index],
+      //     index: index,
+      //   ),
+      // ),
     );
   }
 
-  Widget _buildTabBarList({CardsModel? item, int? index}) {
+  Widget _buildTabBarList({ContractorSubCategoryModel? item, int? index}) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: Get.width * .015,

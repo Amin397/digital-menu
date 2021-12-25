@@ -1,19 +1,20 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Helpers/reuqest_helper.dart';
 import 'package:untitled13/Helpers/view_helper.dart';
 import 'package:untitled13/Screens/SelectKindOrder/Model/restaurant_model.dart';
 
 class SelectKindOrderController extends GetxController {
   bool? hasLogin;
-  RestaurantModel? model;
+
 
   pressInSideOrder() async {
     hasLogin = false;
     if (hasLogin == false) {
       Get.toNamed('/home', arguments: {
         'id':1,
-        'model': model!,
+        'model': Blocs.shop.shopModel!,
       });
     }
   }
@@ -51,7 +52,8 @@ class SelectKindOrderController extends GetxController {
       }
     ).then((value) {
       if(value.isDone){
-        model = RestaurantModel.fromJson(value.data);
+
+        Blocs.shop.getData(value.data);
       }else{
         ViewHelper.errorSnackBar(message: 'خطایی رخ داد');
       }

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:untitled13/MainModels/prduct_model.dart';
-import 'package:untitled13/Screens/Home/Model/home_model.dart';
+import 'package:untitled13/Screens/Home/Model/contractor_sub_category_model.dart';
 
 class SingleController extends GetxController {
 
@@ -65,42 +65,6 @@ class SingleController extends GetxController {
 
     update();
   }
-
-  List<CardsModel> cardsList = [
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-      isSelected: false
-    ),
-    CardsModel(
-      iconTitle: "assets/images/DessertPhoto.svg",
-        isSelected: false
-    ),
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-        isSelected: false
-    ),
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-        isSelected: false
-    ),
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-        isSelected: false
-    ),
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-        isSelected: false
-    ),
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-        isSelected: true
-    ),
-    CardsModel(
-      iconTitle: "assets/images/غذای اصلی.svg",
-        isSelected: false
-    ),
-
-  ];
 
   List<SingleProductModel> singleList = [
     SingleProductModel(

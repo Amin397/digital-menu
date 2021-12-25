@@ -2,6 +2,8 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:untitled13/Bloc/blocs.dart';
+import 'package:untitled13/Const/color_utils.dart';
 import 'package:untitled13/Screens/Home/Controller/home_controller.dart';
 
 class HomePicture extends StatelessWidget {
@@ -15,8 +17,8 @@ class HomePicture extends StatelessWidget {
 
   Widget homePicture() {
     return Container(
-      height: Get.height * .35,
-      width: Get.width * .9,
+      height: Get.height * .4,
+      width: Get.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(
@@ -29,36 +31,54 @@ class HomePicture extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Hero(
-            tag: 'image-tag',
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(
-                  Get.height * .015,
-                ),
-                bottomRight: Radius.circular(
-                  Get.height * .015,
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              height: Get.height * .35,
+              width: Get.width * .95,
+              child: Hero(
+                tag: 'image-tag',
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    Get.height * .015,
+                  ),
+                  child: (Blocs.shop.shopModel!.image!.length > 10)
+                      ? Image(
+                          fit: BoxFit.fill,
+                          image: NetworkImage(
+                            Blocs.shop.shopModel!.image!,
+                          ),
+                        )
+                      : const Image(
+                          fit: BoxFit.fill,
+                          image: AssetImage(
+                            'assets/images/shutterstock_282446912.0.0.png',
+                          ),
+                        ),
                 ),
               ),
-              child: (homeController!.model!.image!.length > 10)
-                  ? Image(
-                fit: BoxFit.fill,
-                image: NetworkImage(
-                  homeController!.model!.image!,
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: Get.height * .35,
+              width: Get.width * .95,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  Get.height * .015,
                 ),
-              )
-                  : const Image(
-                fit: BoxFit.fill,
-                image: AssetImage(
-                  'assets/images/shutterstock_282446912.0.0.png',
-                ),
+                color: Colors.white30,
               ),
             ),
           ),
           Align(
             alignment: Alignment.bottomRight,
             child: Container(
-              margin: EdgeInsets.only(bottom: Get.height * .04),
+              margin: EdgeInsets.only(
+                bottom: Get.height * .04,
+                right: Get.width * .025,
+              ),
               height: Get.height * .06,
               width: Get.width * .49,
               decoration: const BoxDecoration(
@@ -76,10 +96,10 @@ class HomePicture extends StatelessWidget {
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.white.withOpacity(.5),
-                          Colors.white.withOpacity(.4),
-                          Colors.white.withOpacity(.2),
-                          Colors.white.withOpacity(.2),
+                          Colors.black.withOpacity(.5),
+                          Colors.black.withOpacity(.4),
+                          Colors.black.withOpacity(.2),
+                          Colors.black.withOpacity(.2),
                         ],
                       ),
                       borderRadius: BorderRadius.only(
@@ -93,7 +113,7 @@ class HomePicture extends StatelessWidget {
                     ),
                     child: Center(
                       child: AutoSizeText(
-                        homeController!.model!.brandName!,
+                        Blocs.shop.shopModel!.brandName!,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -111,17 +131,19 @@ class HomePicture extends StatelessWidget {
                     child: Center(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(Get.height * .008),
-                        child: (homeController!.model!.logo!.length > 10)?Image(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                          homeController!.model!.logo!,
-                          ),
-                        ): const Image(
-                          fit: BoxFit.cover,
-                          image: AssetImage(
-                            'assets/images/aftabPicture.png',
-                          ),
-                        ),
+                        child: (Blocs.shop.shopModel!.logo!.length > 10)
+                            ? Image(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  Blocs.shop.shopModel!.logo!,
+                                ),
+                              )
+                            : const Image(
+                                fit: BoxFit.cover,
+                                image: AssetImage(
+                                  'assets/images/aftabPicture.png',
+                                ),
+                              ),
                       ),
                       // SvgPicture.asset("assets/icons/IconAftab.svg"),
                     ),
@@ -133,9 +155,9 @@ class HomePicture extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: (){
-
+              icon: const Icon(Icons.arrow_forward_ios),
+              onPressed: () {
+                Get.back();
               },
             ),
           )
