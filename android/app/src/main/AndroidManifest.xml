@@ -1,7 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.untitled13">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+
+
    <application
-        android:label="untitled13"
+        android:label="Digital Menu"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

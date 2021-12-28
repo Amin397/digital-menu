@@ -15,28 +15,36 @@ class HomeScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        body: SafeArea(
-          child: Container(
-            height: Get.height,
-            width: Get.width,
-            color: Colors.white,
-            child: Column(
-              children: [
-                // HomeAppBar(
-                //   homeController: homeController,
-                // ),
-                HomePicture(
-                  homeController: homeController,
+        body: Container(
+          height: Get.height,
+          width: Get.width,
+          color: Colors.white,
+          child: Column(
+            children: [
+              SizedBox(height: Get.height * .03,),
+              Align(
+                alignment: Alignment.topLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.arrow_forward_ios),
+                  onPressed: () {
+                    Get.back();
+                  },
                 ),
-                SizedBox(
-                  height: Get.height * .005,
-                ),
-                HomeCategoryFood(
-                  homeController: homeController,
-                ),
-              ],
-            )
-          ),
+              ),
+              // HomeAppBar(
+              //   homeController: homeController,
+              // ),
+              HomePicture(
+                homeController: homeController,
+              ),
+              // SizedBox(
+              //   height: Get.height * .005,
+              // ),
+              HomeCategoryFood(
+                homeController: homeController,
+              ),
+            ],
+          )
         ),
       ),
     );

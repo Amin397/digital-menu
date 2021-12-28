@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:untitled13/MainModels/prduct_model.dart';
+import 'package:untitled13/MainModels/product_model.dart';
+import 'package:untitled13/Screens/ProductList/Controller/product_list_controller.dart';
 
 class CartBasket {
   final streamController = StreamController.broadcast();
@@ -22,10 +24,9 @@ class CartBasket {
     if (basket.isNotEmpty) {
       for (var o in basket) {
         if (o.categoryId == model.categoryId) {
-          if(o.product!.contains(model)){
-            model.count ++;
-
-          }else{
+          if (o.product!.contains(model)) {
+            model.count++;
+          } else {
             o.product!.add(model);
           }
           // for (var i in o.product!) {
@@ -42,7 +43,7 @@ class CartBasket {
           //   }
           // }
         } else {
-          model.count ++;
+          model.count++;
           uniques.add(
             InnerBasket(
               categoryId: model.categoryId,
@@ -52,7 +53,6 @@ class CartBasket {
               ],
             ),
           );
-
         }
       }
     } else {
@@ -68,7 +68,6 @@ class CartBasket {
       );
     }
     sync();
-
   }
 
   void removeFromCart(SingleProductModel model) {
@@ -157,13 +156,61 @@ class CartBasket {
 
 }
 
+class AminBasket {
+  final streamController = StreamController.broadcast();
+
+  Stream get getStream => streamController.stream;
+
+  List<ProductModel> uniques = [];
+  List<ProductModel> basket = [];
+
+  addToCart({required ProductModel item,}) {
+    uniques.clear();
+    if (basket.isNotEmpty) {
+      for (var o in basket) {
+        if (item.id == o.id) {
+          item.count++;
+        } else {
+          uniques.add(item);
+          item.count++;
+        }
+      }
+    } else {
+      basket.add(item);
+      item.count++;
+    }
+    sync();
+  }
+
+  sync() {
+    streamController.sink.add(uniques);
+    streamController.sink.add(basket);
+  }
+
+  void removeFromBasket({
+    ProductModel? item,
+  }) {
+    if (item!.count == 1) {
+      basket.remove(item);
+      item.count--;
+    } else {
+      item.count--;
+    }
+    sync();
+  }
+
+  void removeCompleteProduct(
+      {ProductModel? item, ProductListController? controller}) {
+    basket.remove(item);
+    item!.count = 0;
+    sync();
+  }
+}
+
 class InnerBasket {
   int? categoryId;
   String? categoryName;
   List<SingleProductModel>? product;
 
   InnerBasket({this.categoryId, this.categoryName, this.product});
-
-
-
 }

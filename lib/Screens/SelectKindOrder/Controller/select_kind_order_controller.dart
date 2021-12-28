@@ -10,12 +10,11 @@ class SelectKindOrderController extends GetxController {
 
 
   pressInSideOrder() async {
+
     hasLogin = false;
     if (hasLogin == false) {
-      Get.toNamed('/home', arguments: {
-        'id':1,
-        'model': Blocs.shop.shopModel!,
-      });
+      Blocs.shop.selectPageNumber(1);
+      Get.toNamed('/home');
     }
   }
 

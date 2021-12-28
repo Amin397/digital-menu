@@ -16,41 +16,42 @@ class HomeCategoryFood extends StatelessWidget {
   }
 
   Widget homeCategoryFood() {
-    return Container(
-      margin: EdgeInsets.only(
-        top: Get.height * .035,
-      ),
-      height: Get.height * .55,
-      width: Get.width * .9,
-      child: Obx(
-        () => (homeController!.isLoaded.value)
-            ? (homeController!.categoryList.isNotEmpty)
-                ? GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 3 / 3.5,
-                    ),
-                    scrollDirection: Axis.vertical,
-                    itemCount: homeController!.categoryList.length,
-                    itemBuilder: (context, index) => _buildCardsViewItem(
-                      item: homeController!.categoryList[index],
-                    ),
-                  )
-                : const Center(
-                    child: Text(
-                      'داده ای یافت نشد',
-                    ),
-                  )
-            : const Center(
-                child: CircularProgressIndicator(),
-              ),
+    return Expanded(
+      child: Container(
+        height: double.maxFinite,
+        width: Get.width,
+        padding: const EdgeInsets.all(16.0),
+        child: Obx(
+          () => (homeController!.isLoaded.value)
+              ? (homeController!.categoryList.isNotEmpty)
+                  ? GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 3 / 3.5,
+                      ),
+                      itemCount: homeController!.categoryList.length,
+                      itemBuilder: (context, index) => _buildCardsViewItem(
+                        item: homeController!.categoryList[index],
+                        index: index,
+                      ),
+                    )
+                  : const Center(
+                      child: Text(
+                        'داده ای یافت نشد',
+                      ),
+                    )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+        ),
       ),
     );
   }
 
   Widget _buildCardsViewItem({
     ContractorSubCategoryModel? item,
+    int? index,
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -60,7 +61,7 @@ class HomeCategoryFood extends StatelessWidget {
       child: Center(
         child: GestureDetector(
           onTap: () {
-            homeController!.nextPage();
+            homeController!.nextPage(item , index);
           },
           child: Container(
             height: Get.height,
@@ -89,21 +90,24 @@ class HomeCategoryFood extends StatelessWidget {
                 SizedBox(height: Get.height * .01),
                 Flexible(
                   flex: 8,
-                  child: Container(
+                  child: SizedBox(
                     height: double.maxFinite,
                     width: double.maxFinite,
-                    child: ClipRRect(
-                      child: (item!.image!.length > 10)
-                          ? Image(
-                              fit: BoxFit.contain,
-                              image: NetworkImage(item.image!),
-                            )
-                          : const Image(
-                              fit: BoxFit.fill,
-                              image: AssetImage(
-                                'assets/images/breackfeast.png',
+                    child: Hero(
+                      tag: 'category-${index}',
+                      child: ClipRRect(
+                        child: (item!.image!.length > 10)
+                            ? Image(
+                                fit: BoxFit.contain,
+                                image: NetworkImage(item.image!),
+                              )
+                            : const Image(
+                                fit: BoxFit.fill,
+                                image: AssetImage(
+                                  'assets/images/breackfeast.png',
+                                ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -143,19 +147,22 @@ class HomeCategoryFood extends StatelessWidget {
                       children: [
                         Flexible(
                           flex: 2,
-                          child: Container(
+                          child: SizedBox(
                             height: double.maxFinite,
                             width: double.maxFinite,
                             child: Align(
                               alignment: Alignment.topCenter,
-                              child: AutoSizeText(
-                                item.name!,
-                                maxFontSize: 18.0,
-                                minFontSize: 14.0,
-                                maxLines: 2,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16.0,
+                              child: Hero(
+                                tag: 'name-$index',
+                                child: AutoSizeText(
+                                  item.name!,
+                                  maxFontSize: 18.0,
+                                  minFontSize: 14.0,
+                                  maxLines: 2,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
                                 ),
                               ),
                             ),
@@ -163,7 +170,7 @@ class HomeCategoryFood extends StatelessWidget {
                         ),
                         Flexible(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             height: double.maxFinite,
                             width: double.maxFinite,
                             child: Center(

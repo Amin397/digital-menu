@@ -14,17 +14,20 @@ class HomeController extends GetxController {
   void onInit() {
     getShopCategory();
 
-    // whichPage = Get.arguments['id'];
     RegisterController.customerInfoSaved.read("globalUserNumberSaved");
     super.onInit();
   }
 
-  nextPage() {
-    // Get.toNamed(
-    //   'single',
-    //   arguments: whichPage,
-    // );
+  nextPage(item , index) {
+    Get.toNamed(
+      'ProductCategory',
+      arguments: {
+        'item':item,
+        'index':index,
+      }
+    );
   }
+
   double dividerHeight = 0.0;
   getShopCategory() async {
     RequestHelper.makePostRequest(

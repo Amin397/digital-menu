@@ -7,6 +7,8 @@ class Shop{
   RestaurantModel? shopModel;
 
   final streamController = StreamController.broadcast();
+
+  int whichPage = 0;
   Stream get getStream => streamController.stream;
 
 
@@ -19,6 +21,11 @@ class Shop{
 
   sync(){
     streamController.sink.add(shopModel);
+  }
+
+  void selectPageNumber(int i) {
+    whichPage = i;
+    sync();
   }
 
 
