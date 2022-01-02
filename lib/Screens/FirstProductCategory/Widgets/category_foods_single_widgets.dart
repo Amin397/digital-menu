@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:untitled13/Const/color_utils.dart';
 import 'package:untitled13/MainModels/get_routs.dart';
 import 'package:untitled13/Screens/FirstProductCategory/Controller/product_sub_category_controller.dart';
-import 'package:untitled13/Screens/Home/Model/contractor_sub_category_model.dart';
 import 'package:untitled13/Screens/FirstProductCategory/Model/single_model.dart';
 
 class CategoryFoodsSingle extends StatelessWidget {
@@ -15,31 +14,25 @@ class CategoryFoodsSingle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return categoryFoodsSingle();
-  }
-
-  Widget categoryFoodsSingle() {
     return SizedBox(
-      height:(productCategoryController!.categoryList.last.length) *  Get.height * .205,
+      height: Get.height * .1,
       width: Get.width,
       child: GetBuilder(
         init: productCategoryController,
-        builder: (ctx){
-          return GridView.builder(
-            gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 3 / 3.5,
-            ),
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: productCategoryController!.categoryList.last.length,
-            itemBuilder: (context, index) => _buildCardsViewItem(
-              item: productCategoryController!.categoryList.last[index],
-              index: index,
-            ),
+        builder: (ctx) {
+          return ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemCount: productCategoryController!.categoryList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildCardsViewItem(
+                item: productCategoryController!.categoryList[index],
+                index: index,
+              );
+            },
           );
         },
-      )
+      ),
     );
   }
 
@@ -49,35 +42,48 @@ class CategoryFoodsSingle extends StatelessWidget {
   }) {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: Get.width * .04,
-        vertical: Get.width * .025,
+        horizontal: Get.width * .02,
+        vertical: Get.width * .02,
       ),
       child: Center(
         child: GestureDetector(
           onTap: () {
-            switch(productCategoryController!.categoryList.length){
-              case 1:{
-                productCategoryController!.nextApi(item:item);
-                break;
-              }
-              case 2:{
-                productCategoryController!.secondApi(item:item);
-                break;
-              }
-              default:{
-                Get.toNamed(NameRouts.productList , arguments: {
-                  'category':item,
-                  'index':index,
-                });
-              }
-            }
+            // productCategoryController!.nextApi(item: item);
+            productCategoryController!.filterProduct(item: item,);
+            //
+            // switch (productCategoryController!.categoryList.length) {
+            //   case 1:
+            //     {
+            //
+            //       break;
+            //     }
+            //   case 2:
+            //     {
+            //       productCategoryController!.secondApi(item: item);
+            //       break;
+            //     }
+            //   default:
+            //     {
+            //       Get.toNamed(NameRouts.productList, arguments: {
+            //         'category': item,
+            //         'index': index,
+            //       });
+            //     }
+            // }
             // homeController!.nextPage(item!.id);
           },
-          child: Container(
+          child: AnimatedContainer(
             height: Get.height,
-            width: Get.width,
-            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            width: Get.width * .45,
+            padding: const EdgeInsets.symmetric(
+              vertical: 4.0,
+              horizontal: 4.0,
+            ),
             decoration: BoxDecoration(
+              border: Border.all(
+                color:
+                    (item!.isSelected!) ? ColorUtils.red : Colors.transparent,
+              ),
               color: Colors.white,
               borderRadius: BorderRadius.circular(Get.height * .008),
               boxShadow: [
@@ -93,37 +99,38 @@ class CategoryFoodsSingle extends StatelessWidget {
                 ),
               ],
             ),
-            child: Column(
+            duration: const Duration(milliseconds: 270),
+            child: Row(
               children: [
-                SizedBox(height: Get.height * .01),
+                SizedBox(width: Get.height * .01),
                 Flexible(
-                  flex: 8,
+                  flex: 5,
                   child: SizedBox(
                     height: double.maxFinite,
                     width: double.maxFinite,
                     child: ClipRRect(
-                      child: (item!.icon!.length > 10)
+                      child: (item.icon!.length > 10)
                           ? Image(
-                        fit: BoxFit.contain,
-                        image: NetworkImage(item.icon!),
-                      )
+                              fit: BoxFit.contain,
+                              image: NetworkImage(item.icon!),
+                            )
                           : const Image(
-                        fit: BoxFit.fill,
-                        image: AssetImage(
-                          'assets/images/breackfeast.png',
-                        ),
-                      ),
+                              fit: BoxFit.fill,
+                              image: AssetImage(
+                                'assets/images/breackfeast.png',
+                              ),
+                            ),
                     ),
                   ),
                 ),
                 GetBuilder(
                   init: productCategoryController,
-                  builder: (ctx){
+                  builder: (ctx) {
                     return AnimatedContainer(
                       duration: const Duration(
                         seconds: 1,
                       ),
-                      height: 1.5,
+                      width: 1.5,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -139,7 +146,7 @@ class CategoryFoodsSingle extends StatelessWidget {
                         vertical: Get.height * .01,
                         horizontal: 4.0,
                       ),
-                      width: productCategoryController!.dividerHeight,
+                      height: productCategoryController!.dividerHeight,
                     );
                   },
                 ),
@@ -200,7 +207,6 @@ class CategoryFoodsSingle extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildTabBarList({ProductCategoryModel? item, int? index}) {
     return Padding(

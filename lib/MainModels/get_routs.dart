@@ -17,7 +17,7 @@ class NameRouts {
   static const String homeScreen = '/home';
   static const String loginscreen = '/loginscreen';
   static const String reservetable = '/reservetable';
-  static const String productCategoryScreen = '/ProductCategory';
+  static const String productCategoryScreen = '/productCategory';
   static const String shopingBasketScreen = '/shopingBasket';
   static const String signinMobile = '/signin';
   static const String endOrderScreen = '/endOrder';

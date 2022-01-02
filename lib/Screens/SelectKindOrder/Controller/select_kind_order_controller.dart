@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Helpers/reuqest_helper.dart';
 import 'package:untitled13/Helpers/view_helper.dart';
+import 'package:untitled13/MainModels/get_routs.dart';
 import 'package:untitled13/Screens/SelectKindOrder/Model/restaurant_model.dart';
 
 class SelectKindOrderController extends GetxController {
@@ -14,7 +15,10 @@ class SelectKindOrderController extends GetxController {
     hasLogin = false;
     if (hasLogin == false) {
       Blocs.shop.selectPageNumber(1);
-      Get.toNamed('/home');
+      Get.toNamed(
+        NameRouts.productCategoryScreen,
+      );
+      // Get.toNamed('/home');
     }
   }
 

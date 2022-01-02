@@ -5,13 +5,16 @@ class ProductCategoryModel {
     this.name,
     this.detail,
     this.icon,
+    this.isSelected,
   });
 
   int? parentId;
   int? id;
   String? name;
   String? detail;
+  double position = 0;
   String? icon;
+  bool? isSelected;
 
 
 
@@ -23,6 +26,7 @@ class ProductCategoryModel {
     name: json["name"],
     detail: json["detail"],
     icon: json["icon"],
+    isSelected: false,
   );
 
   Map<String, dynamic> toJson() => {

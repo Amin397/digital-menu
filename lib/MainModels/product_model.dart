@@ -20,6 +20,7 @@ class ProductModel {
     this.contractorProductCategoryName,
     required this.count,
     this.detail,
+    this.contractorProductCategoryId,
   });
 
   int? id;
@@ -42,6 +43,7 @@ class ProductModel {
   String? minimumOrderCount;
   String? maximumOrderCount;
   String? contractorProductCategoryName;
+  int? contractorProductCategoryId;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
     id: json["id"],
@@ -63,6 +65,7 @@ class ProductModel {
     minimumOrderCount: json["minimum_order_count"],
     maximumOrderCount: json["maximum_order_count"],
     contractorProductCategoryName: json["contractor_product_category_name"],
+    contractorProductCategoryId: json["contractor_product_category_id"],
     count: 0,
   );
 
@@ -88,5 +91,6 @@ class ProductModel {
     "minimum_order_count": minimumOrderCount,
     "maximum_order_count": maximumOrderCount,
     "contractor_product_category_name": contractorProductCategoryName,
+    "contractor_product_category_id": contractorProductCategoryId,
   };
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Const/color_utils.dart';
 import 'Controller/product_sub_category_controller.dart';
 import 'Widgets/category_foods_single_widgets.dart';
@@ -50,31 +51,32 @@ class ProductCategoryScreen extends StatelessWidget {
                                         children: [
                                           SizedBox(
                                             child: Hero(
-                                              tag: 'category-${productCategoryController.index}',
+                                              tag:
+                                                  'category-image',
                                               child: ClipRRect(
-                                                child: (productCategoryController.model!.image!.length > 10)
-                                                    ? Image(
-                                                  fit: BoxFit.contain,
-                                                  image: NetworkImage(productCategoryController.model!.image!),
-                                                )
-                                                    : const Image(
-                                                  fit: BoxFit.fill,
-                                                  image: AssetImage(
-                                                    'assets/images/breackfeast.png',
-                                                  ),
-                                                ),
+                                                child:
+                                                    (Blocs.shop.shopModel!.logo!.length >
+                                                            10)
+                                                        ? Image(
+                                                            fit: BoxFit.contain,
+                                                            image: NetworkImage(Blocs.shop.shopModel!.logo!),
+                                                          )
+                                                        : const Image(
+                                                            fit: BoxFit.fill,
+                                                            image: AssetImage(
+                                                              'assets/images/breackfeast.png',
+                                                            ),
+                                                          ),
                                               ),
                                             ),
                                             height: Get.width * .09,
                                             width: Get.width * .09,
                                           ),
-                                          const SizedBox(width: 12.0,),
-                                          Hero(
-                                            tag: 'name-${productCategoryController.index}',
-                                            child: Text(
-                                              productCategoryController
-                                                  .model!.name!,
-                                            ),
+                                          const SizedBox(
+                                            width: 12.0,
+                                          ),
+                                          Text(
+                                            Blocs.shop.shopModel!.brandName!,
                                           ),
                                         ],
                                       ),
@@ -96,6 +98,10 @@ class ProductCategoryScreen extends StatelessWidget {
                                         productCategoryController:
                                             productCategoryController,
                                       ),
+                                      // FirstFilterLevel(
+                                      //   productCategoryController:
+                                      //       productCategoryController,
+                                      // ),
                                       GetBuilder(
                                         init: productCategoryController,
                                         builder: (ctx) {
@@ -139,7 +145,12 @@ class ProductCategoryScreen extends StatelessWidget {
                                   ),
                                 ),
                               )
-                              // لیست
+                              // const Expanded(
+                              //   child: SizedBox(
+                              //     height: double.maxFinite,
+                              //     width: double.maxFinite,
+                              //   ),
+                              // )
                             ],
                           ),
                         ),

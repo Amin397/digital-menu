@@ -3,6 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:untitled13/Bloc/blocs.dart';
+import 'package:untitled13/Const/color_utils.dart';
+import 'package:untitled13/Helpers/view_helper.dart';
+import 'package:untitled13/MainModels/user_model.dart';
+import 'package:untitled13/Screens/Alerts/LoginAlert/login_alert_dialog.dart';
 
 class FinishedButtonSingle extends StatelessWidget {
   const FinishedButtonSingle({
@@ -15,9 +19,9 @@ class FinishedButtonSingle extends StatelessWidget {
       stream: Blocs.aminBasket.getStream,
       builder: (BuildContext context, i) {
         return AnimatedContainer(
-          margin: EdgeInsets.symmetric(
-            horizontal: Get.width * .02,
-          ),
+          // margin: EdgeInsets.symmetric(
+          //   horizontal: Get.width * .02,
+          // ),
           duration: const Duration(milliseconds: 270),
           height: (Blocs.aminBasket.basket.isNotEmpty) ? Get.height * .07 : 0.0,
           width: Get.width,
@@ -47,7 +51,12 @@ class FinishedButtonSingle extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   // if (productCategoryController!.whichPage == 1) {
-                  //   Get.toNamed('/shopingBasket', arguments: 1);
+                  // if(Blocs)
+                  if(Blocs.user.user is UserModel){
+                    Get.toNamed('/shopingBasket');
+                  }else{
+                    showLoginAlert();
+                  }
                   // } else if (productCategoryController!.whichPage == 2) {
                   //   Get.toNamed('/shopingBasket', arguments: 2);
                   // } else if (productCategoryController!.whichPage == 3) {
@@ -55,7 +64,9 @@ class FinishedButtonSingle extends StatelessWidget {
                   // }
                 },
                 child: Container(
-
+                  margin: EdgeInsets.symmetric(
+                    horizontal: Get.width * .03,
+                  ),
                   height: Get.height * .045,
                   width: Get.width * .4,
                   decoration: BoxDecoration(
@@ -64,7 +75,7 @@ class FinishedButtonSingle extends StatelessWidget {
                   ),
                   child: const Center(
                     child: AutoSizeText(
-                      "ثبت سفارش",
+                      "مشاهده سبد خرید",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
@@ -75,15 +86,101 @@ class FinishedButtonSingle extends StatelessWidget {
                 ),
               ),
               Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: Get.width * .03,
+                ),
                 height: Get.height * .045,
-                width: Get.width * .2,
-                color: Colors.red,
+                width: Get.width * .4,
+                child: Row(
+                  children: [
+                    const Flexible(
+                      flex: 1,
+                      child: SizedBox(
+                        height: double.maxFinite,
+                        width: double.maxFinite,
+                        child: Center(
+                          child: AutoSizeText(
+                            'مجموع قیمت:',
+                            maxLines: 1,
+                            maxFontSize: 14.0,
+                            minFontSize: 8.0,
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: SizedBox(
+                        height: double.maxFinite,
+                        width: double.maxFinite,
+                        child: Column(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: SizedBox(
+                                height: double.maxFinite,
+                                width: double.maxFinite,
+                                child: Center(
+                                  child: AutoSizeText(
+                                    ViewHelper.moneyFormat(Blocs.aminBasket.finalPrice),
+                                    maxLines: 1,
+                                    maxFontSize: 22.0,
+                                    minFontSize: 18.0,
+                                    style: const TextStyle(
+                                      fontSize: 20.0,
+                                      color: ColorUtils.textColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Flexible(
+                              flex: 1,
+                              child: SizedBox(
+                                height: double.maxFinite,
+                                width: double.maxFinite,
+                                child: Center(
+                                  child: AutoSizeText(
+                                    'تومان',
+                                    maxLines: 1,
+                                    maxFontSize: 14.0,
+                                    minFontSize: 8.0,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: ColorUtils.grey,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-
             ],
           ),
         );
       },
+    );
+  }
+
+  void showLoginAlert() async{
+    showDialog(
+        builder: (BuildContext context) {
+          return AlertDialog(
+            contentPadding: EdgeInsets.zero,
+            content: LoginAlertDialog(),
+            backgroundColor: Colors.transparent,
+          );
+        }, context: Get.context!
+
     );
   }
 }

@@ -163,6 +163,7 @@ class AminBasket {
 
   List<ProductModel> uniques = [];
   List<ProductModel> basket = [];
+  double finalPrice = 0.0;
 
   addToCart({required ProductModel item,}) {
     uniques.clear();
@@ -170,14 +171,17 @@ class AminBasket {
       for (var o in basket) {
         if (item.id == o.id) {
           item.count++;
+          finalPrice = finalPrice + double.parse(item.price!);
         } else {
           uniques.add(item);
           item.count++;
+          finalPrice = finalPrice + double.parse(item.price!);
         }
       }
     } else {
       basket.add(item);
       item.count++;
+      finalPrice = finalPrice + double.parse(item.price!);
     }
     sync();
   }
@@ -185,6 +189,7 @@ class AminBasket {
   sync() {
     streamController.sink.add(uniques);
     streamController.sink.add(basket);
+    streamController.sink.add(finalPrice);
   }
 
   void removeFromBasket({
@@ -193,8 +198,10 @@ class AminBasket {
     if (item!.count == 1) {
       basket.remove(item);
       item.count--;
+      finalPrice = finalPrice - double.parse(item.price!);
     } else {
       item.count--;
+      finalPrice = finalPrice - double.parse(item.price!);
     }
     sync();
   }
@@ -202,7 +209,8 @@ class AminBasket {
   void removeCompleteProduct(
       {ProductModel? item, ProductListController? controller}) {
     basket.remove(item);
-    item!.count = 0;
+    finalPrice = finalPrice - (item!.count * double.parse(item.price!));
+    item.count = 0;
     sync();
   }
 }

@@ -9,4 +9,5 @@ class Blocs {
   static final CartBasket cartBasket = CartBasket();
   static final AminBasket aminBasket = AminBasket();
   static final Shop shop = Shop();
+  static final User user = User();
 }

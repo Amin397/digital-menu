@@ -1,8 +1,8 @@
 import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Const/color_utils.dart';
 import 'package:untitled13/Helpers/view_helper.dart';
 import 'package:untitled13/MainModels/product_model.dart';
@@ -23,23 +23,39 @@ class SubCategoryFoodsSingle extends StatelessWidget {
       init: productCategoryController,
       builder: (ctx) {
         return SizedBox(
-            height: (productCategoryController!.productList.last.length) *
-                Get.height *
-                .22,
-            width: Get.width,
-            child: (productCategoryController!.productList.isNotEmpty)
-                ? ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.vertical,
+          height: (productCategoryController!.showProductList.length) *
+              Get.height *
+              .22,
+          width: Get.width,
+          child: (productCategoryController!.showProductList.isNotEmpty)
+              ? AnimationLimiter(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
                     itemCount:
-                        productCategoryController!.productList.last.length,
-                    itemBuilder: (context, index) => _buildCardsViewItem(
-                      item: productCategoryController!.productList.last[index],
-                    ),
-                  )
-                : const Center(
-                    child: Text('داده ای یافت نشد'),
-                  ));
+                        productCategoryController!.showProductList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: Duration(milliseconds: 500),
+                        child: SlideAnimation(
+                          child: FadeInAnimation(
+                            child: _buildCardsViewItem(
+                              item: productCategoryController!
+                                  .showProductList[index],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : const Center(
+                  child: Text(
+                    'داده ای یافت نشد',
+                  ),
+                ),
+        );
       },
     );
   }
