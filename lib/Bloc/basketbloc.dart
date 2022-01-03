@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:get/get.dart';
+import 'package:untitled13/Helpers/view_helper.dart';
 import 'package:untitled13/MainModels/prduct_model.dart';
 import 'package:untitled13/MainModels/product_model.dart';
 import 'package:untitled13/Screens/ProductList/Controller/product_list_controller.dart';
+import 'package:untitled13/Screens/ShopingBasket/Model/shoping_basket_model.dart';
 
 class CartBasket {
   final streamController = StreamController.broadcast();
@@ -159,35 +162,63 @@ class CartBasket {
 class AminBasket {
   final streamController = StreamController.broadcast();
 
+  TableModel? table;
+
   Stream get getStream => streamController.stream;
 
   List<ProductModel> uniques = [];
   List<ProductModel> basket = [];
   double finalPrice = 0.0;
 
-  addToCart({required ProductModel item,}) {
+
+  void setTable({TableModel? tableModel}){
+    table = tableModel;
+    Get.back();
+    sync();
+  }
+
+
+  addToCart({
+    required ProductModel item,
+  }) {
     uniques.clear();
     if (basket.isNotEmpty) {
-      for (var o in basket) {
-        if (item.id == o.id) {
-          item.count++;
-          finalPrice = finalPrice + double.parse(item.price!);
-        } else {
-          uniques.add(item);
-          item.count++;
-          finalPrice = finalPrice + double.parse(item.price!);
-        }
+      if (basket.any((element) => element.id == item.id)) {
+        item.count++;
+        item.sumPrice =
+            ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+        finalPrice = finalPrice + double.parse(item.price!);
+      } else {
+        basket.add(item);
+        item.count++;
+        item.sumPrice =
+            ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+        finalPrice = finalPrice + double.parse(item.price!);
       }
+      // for (var o in basket) {
+      //   if (item.id == o.id) {
+      //   } else {
+      //     uniques.add(item);
+      //
+      //   }
+      // }
     } else {
       basket.add(item);
       item.count++;
+      item.sumPrice =
+          ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
       finalPrice = finalPrice + double.parse(item.price!);
     }
     sync();
   }
 
   sync() {
+    // basket.clear();
+    // basket.addAll(uniques);
+    // basket.addAll(uniques);
+    print(basket.length);
     streamController.sink.add(uniques);
+    streamController.sink.add(table);
     streamController.sink.add(basket);
     streamController.sink.add(finalPrice);
   }
@@ -198,19 +229,33 @@ class AminBasket {
     if (item!.count == 1) {
       basket.remove(item);
       item.count--;
+      item.sumPrice =
+          ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
       finalPrice = finalPrice - double.parse(item.price!);
     } else {
       item.count--;
+      item.sumPrice =
+          ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
       finalPrice = finalPrice - double.parse(item.price!);
     }
     sync();
   }
 
-  void removeCompleteProduct(
-      {ProductModel? item, ProductListController? controller}) {
+  void removeCompleteProduct({
+    ProductModel? item,
+  }) {
     basket.remove(item);
     finalPrice = finalPrice - (item!.count * double.parse(item.price!));
     item.count = 0;
+    item.sumPrice =
+        ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+    sync();
+  }
+
+  void clearAllData() {
+    basket.clear();
+    finalPrice = 0.0;
+    table = null;
     sync();
   }
 }

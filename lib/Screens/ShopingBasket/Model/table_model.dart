@@ -24,9 +24,6 @@ class TableModel {
     detail: json["detail"],
   );
 
-
-  static List<TableModel> listFromJson(List data)=>data.map((e) => TableModel.fromJson(e)).toList();
-
   Map<String, dynamic> toJson() => {
     "contractor": contractor,
     "id": id,

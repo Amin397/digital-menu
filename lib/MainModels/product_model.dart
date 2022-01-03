@@ -21,6 +21,7 @@ class ProductModel {
     required this.count,
     this.detail,
     this.contractorProductCategoryId,
+    this.sumPrice,
   });
 
   int? id;
@@ -39,6 +40,7 @@ class ProductModel {
   String? countUnitName;
   List<String>? availableShiftId;
   String? price;
+  String? sumPrice;
   String? makeReadyTime;
   String? minimumOrderCount;
   String? maximumOrderCount;
@@ -67,6 +69,7 @@ class ProductModel {
     contractorProductCategoryName: json["contractor_product_category_name"],
     contractorProductCategoryId: json["contractor_product_category_id"],
     count: 0,
+    sumPrice: '',
   );
 
 

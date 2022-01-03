@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:untitled13/Const/color_utils.dart';
+import 'package:untitled13/MainModels/get_routs.dart';
 
 import 'Controller/login_alert_controller.dart';
 
@@ -74,19 +75,25 @@ class LoginAlertDialog extends StatelessWidget {
           children: [
             Flexible(
               flex: 2,
-              child: Container(
-                height: double.maxFinite,
-                width: double.maxFinite,
-                decoration: BoxDecoration(
+              child: GestureDetector(
+                onTap: () {
+                  // Get.toNamed(NameRouts.signinMobile);
+                },
+                child: Container(
+                  height: double.maxFinite,
+                  width: double.maxFinite,
+                  decoration: BoxDecoration(
                     color: ColorUtils.green,
                     boxShadow: kElevationToShadow[1],
-                    borderRadius: BorderRadius.circular(8.0)),
-                child: const Center(
-                  child: AutoSizeText(
-                    'میخوام ثبت نام کنم',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: const Center(
+                    child: AutoSizeText(
+                      'میخوام ثبت نام کنم',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                 ),

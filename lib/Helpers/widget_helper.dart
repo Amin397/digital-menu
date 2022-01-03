@@ -12,6 +12,8 @@ import 'package:untitled13/Helpers/view_helper.dart';
 typedef OnChangeStringInput = void Function(String);
 
 class WidgetHelper {
+
+
   static Widget textFormField({
     TextEditingController? controller,
     String? label,
@@ -100,6 +102,43 @@ class WidgetHelper {
           ),
         ),
       ),
+    );
+  }
+
+
+
+  Widget _buildFormTextField({
+    TextEditingController? controller,
+    String? title,
+    int? maxLine,
+    double? height,
+    Widget? icon,
+    List<TextInputFormatter> formatter = const [],
+  }) {
+    return WidgetHelper.textFormField(
+      height: height!,
+      width: Get.width,
+      func: (text){
+
+      },
+      formatter: formatter,
+      fillColor: Colors.white,
+      enable: true,
+      maxLines: maxLine,
+      controller: controller!,
+      label: title!,
+      numeric: false,
+      autoFocus: false,
+      textAlign: TextAlign.right,
+      prefixWidget: icon!,
+      borderColor: Colors.grey.withOpacity(.5),
+      placeHolderColor: Colors.grey,
+      textStyle: TextStyle(
+        color: Colors.black.withOpacity(.8),
+        fontSize: 14.0,
+      ),
+      inputAction: TextInputAction.done,
+      focusedColor: ColorUtils.main,
     );
   }
 

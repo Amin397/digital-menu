@@ -37,7 +37,7 @@ class SubCategoryFoodsSingle extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return AnimationConfiguration.staggeredList(
                         position: index,
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         child: SlideAnimation(
                           child: FadeInAnimation(
                             child: _buildCardsViewItem(

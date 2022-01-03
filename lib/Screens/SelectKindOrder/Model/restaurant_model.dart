@@ -16,9 +16,13 @@ class RestaurantModel {
     this.tableReservation,
     this.logo,
     this.image,
+    this.hasGateway,
+    this.reservationTime,
   });
 
   int? id;
+  int? hasGateway;
+  int? reservationTime;
   String? brandName;
   String? categoryId;
   List<String>? subCategories;
@@ -52,6 +56,8 @@ class RestaurantModel {
     tableReservation: json["tableReservation"],
     logo: json["logo"],
     image: json["image"],
+    hasGateway: json["hasGateway"],
+    reservationTime: json["reservation_time"],
   );
 
   Map<String, dynamic> toJson() => {
