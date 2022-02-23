@@ -23,7 +23,7 @@ class TopPartLoginScreen extends StatelessWidget {
         Container(
           height: Get.height * .2,
           width: Get.width * .5,
-          color: ColorUtils.mainRed,
+          color: Colors.white,
           child: Center(
             child: Transform.rotate(
               angle: .3,

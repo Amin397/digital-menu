@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:untitled13/Const/color_utils.dart';
 import 'package:untitled13/Screens/Login/controller/login_controller_amin_khademi.dart';
 
 class PinCodeLoginField extends StatelessWidget {
@@ -12,93 +13,68 @@ class PinCodeLoginField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return passWordLoginField();
-  }
-
-  Widget passWordLoginField() {
-    return SizedBox(
-      height: Get.height * .4,
-      width: Get.width * .8,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            height: Get.height * .25,
-            width: Get.width * .8,
+    return Column(
+      children: [
+        Flexible(
+          flex: 5,
+          child: SizedBox(
+            height: double.maxFinite,
+            width: double.maxFinite,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Align(
-                  alignment: Alignment.center,
-                  child: AutoSizeText(
-                    "شماره موبایل خود را وارد کنید",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
+                const AutoSizeText(
+                  "شماره موبایل خود را وارد کنید",
+                  maxLines: 2,
+                  maxFontSize: 20.0,
+                  minFontSize: 14.0,
+                  style: TextStyle(
+                    color: ColorUtils.textColor,
+                    fontSize: 18.0,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: GestureDetector(
+                    onTap: (){
+                      loginController!.goToFirstPage();
+                    },
+                    child: Container(
+                      height: Get.height * .06,
+                      width: Get.width * .4,
+                      decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              width: 0.5,
+                              color: ColorUtils.mainRed.withOpacity(.5),
+                            ),
+                          )
+                      ),
+                      child: Row(
+                        mainAxisAlignment:
+                        MainAxisAlignment.end,
+                        children: [
+                          const Icon(
+                            Icons.edit,
+                            color: ColorUtils.mainRed,
+                          ),
+                          SizedBox(
+                            width: Get.width * .05,
+                          ),
+                          AutoSizeText(
+                            loginController!
+                                .mobileTextfieldController.text,
+                            style: const TextStyle(
+                              color: ColorUtils.textColor,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
                 Container(
-                  height: Get.height * .06,
-                  width: Get.height * .5,
-                  child: Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: Container(
-                          color: Colors.transparent,
-                          height: double.maxFinite,
-                          width: double.maxFinite,
-                        ),
-                      ),
-                      Flexible(
-                        flex: 1,
-                        child: SizedBox(
-                          height: double.maxFinite,
-                          width: double.maxFinite,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: Get.height * .015,
-                                width: Get.width,
-                                color: Colors.transparent,
-                              ),
-                              Container(
-                                height: Get.height * .04,
-                                width: Get.width,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                    AutoSizeText(
-                                      loginController!
-                                          .mobileTextfieldController.text,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: Get.height * .0015,
-                                width: Get.width,
-                                color: Colors.white,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: Get.height * .06,
+                  height: Get.height * .15,
                   width: Get.width,
                   padding: EdgeInsets.symmetric(
                     horizontal: Get.width * .01,
@@ -108,26 +84,32 @@ class PinCodeLoginField extends StatelessWidget {
                   ),
                   child: Directionality(
                     textDirection: TextDirection.ltr,
-                    child: PinCodeTextField(
-                      controller: loginController!.pinCodeController,
-                      appContext: Get.context!,
-                      onTap: () {},
-                      onCompleted: (value) {},
-                      onChanged: (newValue) {},
-                      length: 4,
-                      obscureText: false,
-                      animationType: AnimationType.fade,
-                      cursorColor: Colors.white,
-                      pinTheme: PinTheme(
-                        activeColor: Colors.white,
-                        inactiveColor: Colors.white,
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: 50,
-                        fieldWidth: 40,
-                        activeFillColor: Colors.white,
+                    child: Center(
+                      child: PinCodeTextField(
+                        controller: loginController!.pinCodeController,
+                        appContext: Get.context!,
+                        onTap: () {},
+                        onCompleted: (value) {
+                          FocusScope.of(context).unfocus();
+                          loginController!.getPinCodeAPI();
+                        },
+                        onChanged: (newValue) {},
+                        length: 4,
+                        autoFocus: true,
+                        obscureText: false,
+                        animationType: AnimationType.fade,
+                        cursorColor: ColorUtils.mainRed,
+                        pinTheme: PinTheme(
+                          activeColor: ColorUtils.green,
+                          inactiveColor: Colors.blue,
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(5),
+                          fieldHeight: 50,
+                          fieldWidth: 40,
+                          activeFillColor: Colors.black,
+                        ),
+                        textStyle: const TextStyle(color: Colors.black),
                       ),
-                      textStyle: const TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
@@ -135,7 +117,8 @@ class PinCodeLoginField extends StatelessWidget {
                   alignment: Alignment.center,
                   child: InkWell(
                     onTap: () {
-                      loginController!.sendAgainGetPinCodeAPI();
+                      FocusScope.of(context).unfocus();
+                      loginController!.getLoginAPI();
                     },
                     child: const AutoSizeText(
                       "ارسال مجدد کد",
@@ -149,9 +132,12 @@ class PinCodeLoginField extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
-            height: Get.height * .1,
-            width: Get.width * .8,
+        ),
+        Flexible(
+          flex: 1,
+          child: SizedBox(
+            height: double.maxFinite,
+            width: double.maxFinite,
             child: Center(
               child: GetBuilder(
                 init: loginController,
@@ -188,8 +174,8 @@ class PinCodeLoginField extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

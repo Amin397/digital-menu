@@ -11,15 +11,21 @@ import 'package:untitled13/MainModels/get_routs.dart';
 import 'package:untitled13/MainModels/prduct_model.dart';
 import 'package:untitled13/MainModels/user_model.dart';
 import 'package:untitled13/Screens/ShopingBasket/Model/gatewey_model.dart';
+import 'package:untitled13/Screens/ShopingBasket/Model/reserved_table_model.dart';
 import 'package:untitled13/Screens/ShopingBasket/Model/shoping_basket_model.dart';
 import 'package:untitled13/Screens/ShopingBasket/Widgets/final_detail_dialog.dart';
+import 'package:untitled13/Screens/ShopingBasket/Widgets/reservation_table_code_alert.dart';
+import 'package:untitled13/Screens/ShopingBasket/Widgets/reserved_table_detail_alert.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ShoppingBasketController extends GetxController {
   List<SingleProductModel> productList = [];
   var whichPage = Get.arguments;
   bool? countBox = false;
 
+  ReservedTableModel? reservedTableModel;
   double dividerHeight = 0.0;
+  TextEditingController reserveTextEditingController = TextEditingController();
 
   List<TableModel>? tableList = [];
 
@@ -93,11 +99,13 @@ class ShoppingBasketController extends GetxController {
 
   void finalSubmit() async {
     EasyLoading.show();
-    List<Map<String, dynamic>> products = [];
+    Map<String, dynamic> products = {};
 
     for (var o in Blocs.aminBasket.basket) {
-      Map<String, dynamic> map = {o.id.toString(): o.count};
-      products.insert(0, map);
+      // Map<String, dynamic> map = {o.id.toString(): o.count};
+      products[o.id.toString()] = o.count.value;
+      // products.addEntries({o:map});
+      // products.insert(0, map);
     }
 
     RequestHelper.makePostRequest(
@@ -105,7 +113,7 @@ class ShoppingBasketController extends GetxController {
       controller: 'Orders',
       body: (Blocs.user.user is UserModel)
           ? {
-              'customerId': Blocs.user.user!.id.toString(),
+              'customerId': Blocs.user.user!.customerId.toString(),
               'orderPaymentId': gatewayList
                   .singleWhere((element) => element.isSelected!)
                   .id
@@ -127,17 +135,97 @@ class ShoppingBasketController extends GetxController {
               'productsPrice': Blocs.aminBasket.finalPrice.toString(),
               'order_type': '2',
               'table_id': Blocs.aminBasket.table!.id.toString(),
-              'products': jsonEncode(products)
+              'products': jsonEncode(products),
             },
     ).then((value) {
       EasyLoading.dismiss();
       if (value.isDone) {
-        Get.toNamed(NameRouts.successScreen);
+        if (gatewayList.singleWhere((element) => element.isSelected!).id == 2) {
+          launch(
+            value.data['url'],
+          );
+        } else {
+          Get.toNamed(NameRouts.successScreen);
+        }
       } else {
         ViewHelper.errorSnackBar(
           message: 'خطایی رخ داد',
         );
       }
     });
+  }
+
+  void showReserveTableAlert() async {
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
+        content: ReservationTableCodeAlert(controller: this),
+      ),
+    );
+  }
+
+  void getReservationCode() async {
+    if (reserveTextEditingController.text.length == 6) {
+      EasyLoading.show(
+        status: 'در حال پردازش ...',
+        maskType: EasyLoadingMaskType.black,
+      );
+      RequestHelper.makePostRequest(
+          controller: 'Reservations',
+          method: 'reservationInfo',
+          body: {
+            'code': reserveTextEditingController.text,
+          }).then((value) {
+        EasyLoading.dismiss();
+        if (value.isDone) {
+          reservedTableModel = ReservedTableModel.fromJson(value.data);
+          showReservedTableDetail(
+            reservedTableModel: reservedTableModel,
+          );
+        } else {
+          ViewHelper.errorSnackBar(
+            message: 'کد رزرو اشتباه است',
+          );
+          reserveTextEditingController.clear();
+        }
+      });
+    } else {
+      ViewHelper.errorSnackBar(
+        message: 'کد رزرو 6 رقم میباشد',
+      );
+    }
+  }
+
+  void showReservedTableDetail({ReservedTableModel? reservedTableModel}) {
+    Get.back();
+    showDialog(
+      context: Get.context!,
+      builder: (BuildContext context) => AlertDialog(
+        contentPadding: EdgeInsets.zero,
+        backgroundColor: Colors.transparent,
+        content: ReservedTableDetailAlert(
+          reservedTableModel: reservedTableModel,
+          controller: this,
+        ),
+      ),
+    );
+  }
+
+  void checkTableDetail() {
+    Blocs.aminBasket.setTable(
+      tableModel: TableModel(
+        isSelected: true.obs,
+        name: reservedTableModel!.tableName,
+        capacity: reservedTableModel!.tableCapacity,
+        contractor: Blocs.shop.shopModel!.brandName,
+        detail: reservedTableModel!.tableDetails,
+        id: reservedTableModel!.tableId,
+        number: reservedTableModel!.tableNumber,
+        price: reservedTableModel!.tablePrice,
+      ),
+    );
+    // Get.back();
   }
 }

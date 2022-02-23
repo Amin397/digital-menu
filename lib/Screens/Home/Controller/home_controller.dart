@@ -14,7 +14,7 @@ class HomeController extends GetxController {
   void onInit() {
     getShopCategory();
 
-    RegisterController.customerInfoSaved.read("globalUserNumberSaved");
+    RegisterController.customerInfoSaved.read("userData");
     super.onInit();
   }
 

@@ -33,7 +33,8 @@ void main() async {
         ],
         debugShowCheckedModeBanner: false,
         getPages: PageRout.pages,
-        initialRoute: NameRouts.selectKindOrderScreen,
+        // initialRoute: NameRouts.selectKindOrderScreen,
+        initialRoute: NameRouts.splashScreen,
         theme: ThemeData(
           fontFamily: 'iranSanc',
         ),

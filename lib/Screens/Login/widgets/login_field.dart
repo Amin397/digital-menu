@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:untitled13/Const/color_utils.dart';
 import 'package:untitled13/Screens/Login/controller/login_controller_amin_khademi.dart';
 
 class PassWordLoginField extends StatelessWidget {
@@ -13,171 +14,124 @@ class PassWordLoginField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return passWordLoginField();
-  }
-
-  Widget passWordLoginField() {
     return Container(
       height: Get.height * .4,
       width: Get.width * .8,
+      color: Colors.white,
       child: GetBuilder(
         init: loginController,
         builder: (_) => Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
+            SizedBox(
               height: Get.height * .3,
               width: Get.width * .8,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Align(
+                  const Align(
                     alignment: Alignment.center,
                     child: AutoSizeText(
                       "رمز عبور خود را وارد کنید",
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                      style: TextStyle(
+                        color: ColorUtils.textColor,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
-                  Container(
-                    height: Get.height * .06,
-                    width: Get.height * .4,
-                    child: Row(
-                      children: [
-                        Flexible(
-                          flex: 1,
-                          child: Container(
-                            color: Colors.transparent,
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                          ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: (){
+                        loginController!.goToFirstPage();
+                      },
+                      child: Container(
+                        height: Get.height * .06,
+                        width: Get.width * .4,
+                        decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                width: 0.5,
+                                color: ColorUtils.mainRed.withOpacity(.5),
+                              ),
+                            )
                         ),
-                        Flexible(
-                          flex: 1,
-                          child: Container(
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                            child: Column(
-                              children: [
-                                Container(
-                                  height: Get.height * .015,
-                                  width: Get.width,
-                                  color: Colors.transparent,
-                                ),
-                                Container(
-                                  height: Get.height * .04,
-                                  width: Get.width,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Icon(
-                                        Icons.edit,
-                                        color: Colors.white,
-                                      ),
-                                      AutoSizeText(
-                                        loginController!
-                                            .mobileTextfieldController.text,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  height: Get.height * .0015,
-                                  width: Get.width,
-                                  color: Colors.white,
-                                ),
-                              ],
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.end,
+                          children: [
+                            const Icon(
+                              Icons.edit,
+                              color: ColorUtils.mainRed,
                             ),
-                          ),
+                            SizedBox(
+                              width: Get.width * .05,
+                            ),
+                            AutoSizeText(
+                              loginController!
+                                  .mobileTextfieldController.text,
+                              style: const TextStyle(
+                                color: ColorUtils.textColor,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                  Container(
-                    height: Get.height * .05,
+                  SizedBox(
                     width: Get.width,
-                    padding: EdgeInsets.symmetric(horizontal: Get.width * .04),
-                    margin: EdgeInsets.symmetric(horizontal: Get.width * .06),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 3),
-                      borderRadius: BorderRadius.circular(Get.height * .032),
-                    ),
-                    child: Directionality(
-                      textDirection: TextDirection.ltr,
+                    height: Get.height * .06,
+                    child: Center(
                       child: TextField(
-                        obscureText: true,
-                        enableSuggestions: false,
-                        autocorrect: false,
                         autofocus: false,
                         controller: loginController!.passWordController,
                         textAlign: TextAlign.left,
+                        enabled: true,
+                        keyboardType: TextInputType.number,
                         inputFormatters: [
-                          LengthLimitingTextInputFormatter(11),
-                        ],
-                        decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            hintText: "* * * * * * * * *",
-                            hintStyle: TextStyle(color: Colors.white)),
-                        style: const TextStyle(
-                          color: Colors.white,
-                        ),
-                        textDirection: TextDirection.ltr,
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: AutoSizeText(
-                      "فراموشی رمز عبور",
-                      style: TextStyle(
-                        color: Color(0xffE29805),
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      height: Get.height * .03,
-                      width: Get.width * .3,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          GestureDetector(
-                              onTap: () {
-                                loginController!.showingPass();
-                              },
-                              child: AnimatedContainer(
-                                height: Get.height * .02,
-                                width: Get.height * .02,
-                                decoration: BoxDecoration(
-                                  color: (loginController!.isShowPass == true)
-                                      ? Color(0xffE29805)
-                                      : Colors.transparent,
-                                  border:
-                                      Border.all(color: Colors.white, width: 2),
-                                  borderRadius:
-                                      BorderRadius.circular(Get.height * .032),
-                                ),
-                                duration: Duration(milliseconds: 300),
-                              )),
-                          AutoSizeText(
-                            "نمایش رمز عبور",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          LengthLimitingTextInputFormatter(
+                            11,
                           ),
                         ],
+                        onChanged: (text){
+                          if(text.length == 11){
+                            FocusScope.of(context).unfocus();
+                            loginController!.getLoginAPI();
+                          }
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: ColorUtils.mainDote,
+                              width: 0.8,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          hintText: "* * * * * * *",
+                          hintStyle: const TextStyle(
+                            color: Colors.grey,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: ColorUtils.mainDote,
+                              width: 0.8,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        textDirection: TextDirection.ltr,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: Get.height * .1,
               width: Get.width * .8,
               child: Center(
@@ -191,7 +145,7 @@ class PassWordLoginField extends StatelessWidget {
                       height: Get.height * .047,
                       width: Get.width * .4,
                       decoration: BoxDecoration(
-                        color: Color(0xffE29805),
+                        color: const Color(0xffE29805),
                         borderRadius: BorderRadius.circular(Get.height * .03),
                         boxShadow: [
                           BoxShadow(
@@ -202,7 +156,7 @@ class PassWordLoginField extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Center(
+                      child: const Center(
                         child: AutoSizeText(
                           "ورود",
                           style: TextStyle(

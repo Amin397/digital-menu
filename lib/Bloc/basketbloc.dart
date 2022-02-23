@@ -186,13 +186,13 @@ class AminBasket {
       if (basket.any((element) => element.id == item.id)) {
         item.count++;
         item.sumPrice =
-            ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+            ViewHelper.moneyFormat((item.count.value * (double.parse(item.price!))));
         finalPrice = finalPrice + double.parse(item.price!);
       } else {
         basket.add(item);
         item.count++;
         item.sumPrice =
-            ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+            ViewHelper.moneyFormat((item.count.value * (double.parse(item.price!))));
         finalPrice = finalPrice + double.parse(item.price!);
       }
       // for (var o in basket) {
@@ -206,7 +206,7 @@ class AminBasket {
       basket.add(item);
       item.count++;
       item.sumPrice =
-          ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+          ViewHelper.moneyFormat((item.count.value * (double.parse(item.price!))));
       finalPrice = finalPrice + double.parse(item.price!);
     }
     sync();
@@ -226,16 +226,16 @@ class AminBasket {
   void removeFromBasket({
     ProductModel? item,
   }) {
-    if (item!.count == 1) {
+    if (item!.count.value == 1) {
       basket.remove(item);
       item.count--;
       item.sumPrice =
-          ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+          ViewHelper.moneyFormat((item.count.value * (double.parse(item.price!))));
       finalPrice = finalPrice - double.parse(item.price!);
     } else {
       item.count--;
       item.sumPrice =
-          ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+          ViewHelper.moneyFormat((item.count.value * (double.parse(item.price!))));
       finalPrice = finalPrice - double.parse(item.price!);
     }
     sync();
@@ -246,9 +246,9 @@ class AminBasket {
   }) {
     basket.remove(item);
     finalPrice = finalPrice - (item!.count * double.parse(item.price!));
-    item.count = 0;
+    item.count = 0.obs;
     item.sumPrice =
-        ViewHelper.moneyFormat((item.count * (double.parse(item.price!))));
+        ViewHelper.moneyFormat((item.count.value * (double.parse(item.price!))));
     sync();
   }
 

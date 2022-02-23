@@ -62,7 +62,9 @@ class ProductListController extends GetxController {
     Blocs.aminBasket.addToCart(
       item: item!,
     );
-    update();
   }
+
+
+
 
 }

@@ -4,8 +4,11 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Helpers/reuqest_helper.dart';
+import 'package:untitled13/Helpers/view_helper.dart';
 import 'package:untitled13/MainModels/api_result.dart';
+import 'package:untitled13/MainModels/user_model.dart';
 import 'package:untitled13/Screens/RegisterScreen/Model/register_model.dart';
 
 class RegisterController extends GetxController {
@@ -13,14 +16,27 @@ class RegisterController extends GetxController {
 
   TextEditingController nameTextFieldController = TextEditingController();
   TextEditingController passWordTextFieldController = TextEditingController();
+  String? mobile;
+
 
   List<GenderApiResult> gendersList = [
-    GenderApiResult(genderId: 1, genderName: 'مرد', isGender: false),
-    GenderApiResult(genderId: 2, genderName: 'زن', isGender: false),
+    GenderApiResult(
+      genderId: 1,
+      genderName: 'مرد',
+      isGender: false,
+    ),
+    GenderApiResult(
+      genderId: 2,
+      genderName: 'زن',
+      isGender: false,
+    ),
   ];
+
+
 
   @override
   void onInit() {
+    mobile = whichPage["mobileTextfieldController"];
     initialArguments();
     pageViewController = PageController(initialPage: 0);
     super.onInit();
@@ -51,7 +67,12 @@ class RegisterController extends GetxController {
 
   getCompeleteRegister() async {
     if (passWordTextFieldController.text.isNotEmpty &&
-        passWordTextFieldController.text.length == 8) {
+        passWordTextFieldController.text.length >= 6) {
+      await EasyLoading.show(
+        status: 'در حال پردازش ...',
+        maskType: EasyLoadingMaskType.black,
+      );
+
       RequestHelper.makePostRequest(
           controller: 'Customers',
           method: 'register',
@@ -63,57 +84,58 @@ class RegisterController extends GetxController {
                 .singleWhere((element) => element.isGender!)
                 .genderId
                 .toString(),
-          }).then((value) async {
-        await EasyLoading.show(
-          status: 'در حال پردازش ...',
-          maskType: EasyLoadingMaskType.black,
-        );
-        Future.delayed(const Duration(seconds: 2), () async {
+          }).then(
+        (value) async {
           EasyLoading.dismiss();
-        });
-        if (value.isDone) {
-          if (whichPage["outSideOrderArgument"] == 2) {
-            Future.delayed(const Duration(seconds: 2), () async {
-              Get.offNamed('/home', arguments: 2);
-            });
-
-            print("DONE 2");
-          } else if (whichPage["reserveTableArgument"] == 3) {
-            Future.delayed(const Duration(seconds: 2), () async {
-              Get.offNamed('/reservetable', arguments: 3);
-            });
-            print("DONE 3");
+          if (value.isDone) {
+            getCustomerInfo();
+          } else {
+            ViewHelper.errorSnackBar(
+              message: 'کد ارسالی اشتباه است',
+            );
           }
-        }
-      });
+        },
+      );
     } else {
-      //TODO:inja error neshon bede
+      ViewHelper.errorSnackBar(
+        message: 'رمز عبور شما باید بیشتر از 6 حرف باشد',
+      );
     }
   }
 
   static var customerInfoSaved = GetStorage();
-
-  CustomerInfoModel? customerInfoModel;
+  UserModel? customerInfoModel;
 
   getCustomerInfo() async {
+    await EasyLoading.show(
+      status: 'در حال پردازش ...',
+      maskType: EasyLoadingMaskType.black,
+    );
     RequestHelper.makePostRequest(
         controller: 'Customers',
         method: 'customerInfo',
-        body: {"mobile": whichPage["mobileTextfieldController"]}).then(
+        body: {
+          "mobile": whichPage["mobileTextfieldController"],
+        }).then(
       (value) async {
-        print(value.data);
-        await EasyLoading.show(
-          status: 'در حال پردازش ...',
-          maskType: EasyLoadingMaskType.black,
-        );
-        Future.delayed(const Duration(seconds: 2), () async {
-          EasyLoading.dismiss();
-        });
+        EasyLoading.dismiss();
         if (value.isDone) {
-          for (var o in value.data) {
-            customerInfoModel = CustomerInfoModel.fromJson(o);
+          customerInfoModel = UserModel.fromJson(
+            value.data,
+          );
+
+          Blocs.user.setData(
+            json: value.data,
+          );
+          customerInfoSaved.write(
+              "userMobile", whichPage["mobileTextfieldController"].toString());
+          if (whichPage["outSideOrderArgument"] == 2) {
+            Get.offNamed('/selectkindorder', arguments: 2);
+          } else if (whichPage["reserveTableArgument"] == 3) {
+            Get.offNamed(
+              '/selectkindorder',
+            );
           }
-          customerInfoSaved.write("globalUserNumberSaved", customerInfoModel);
         }
       },
     );

@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class TableModel {
   TableModel({
     this.contractor,
@@ -6,10 +8,14 @@ class TableModel {
     this.capacity,
     this.number,
     this.detail,
+    this.price,
+    required this.isSelected,
   });
 
   String? contractor;
   int? id;
+  RxBool isSelected = false.obs;
+  int? price;
   String? name;
   int? capacity;
   int? number;
@@ -22,6 +28,8 @@ class TableModel {
     capacity: json["capacity"],
     number: json["number"],
     detail: json["detail"],
+    price: json["price"],
+    isSelected: false.obs,
   );
 
 
@@ -34,5 +42,6 @@ class TableModel {
     "capacity": capacity,
     "number": number,
     "detail": detail,
+    "price": price,
   };
 }

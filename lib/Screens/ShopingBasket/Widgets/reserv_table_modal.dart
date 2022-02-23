@@ -7,9 +7,10 @@ import 'package:untitled13/Screens/ShopingBasket/Controller/shoping_basket_contr
 import 'package:untitled13/Screens/ShopingBasket/Model/shoping_basket_model.dart';
 
 class ReserveTableModal extends StatelessWidget {
-  const ReserveTableModal({Key? key, this.shoppingBasketController})
-      : super(key: key);
-
+  ReserveTableModal({
+    Key? key,
+    this.shoppingBasketController,
+  }) : super(key: key);
   final ShoppingBasketController? shoppingBasketController;
 
   @override
@@ -138,11 +139,10 @@ class ReserveTableModal extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                // print(shoppingBasketController!.tableList![shoppingBasketController!.currentPage].name);
-                Blocs.aminBasket.setTable(
-                  tableModel: shoppingBasketController!
-                      .tableList![shoppingBasketController!.currentPage],
-                );
+                  Blocs.aminBasket.setTable(
+                    tableModel: shoppingBasketController!
+                        .tableList![shoppingBasketController!.currentPage],
+                  );
               },
               child: Container(
                 height: Get.height * .05,

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:untitled13/Bloc/blocs.dart';
 import 'package:untitled13/Helpers/reuqest_helper.dart';
+import 'package:untitled13/Helpers/view_helper.dart';
+import 'package:untitled13/MainModels/get_routs.dart';
 
 class LoginController extends GetxController {
   TextEditingController mobileTextfieldController = TextEditingController();
@@ -15,34 +19,22 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    initialArguments();
     pageViewController = PageController(initialPage: 0);
     super.onInit();
   }
 
 
-  initialArguments() {
-    print(whichPage.toString());
-    if (whichPage == 2) {
-      whichPage = 2;
-    } else if (whichPage == 3) {
-      whichPage = 3;
-    }
-  }
-
-  bool? isShowPass = false;
-
-  showingPass() {
-    isShowPass = !isShowPass!;
-    print("object");
-    update();
+  goToFirstPage(){
+    pageViewController!.jumpTo(0);
   }
 
   getLoginAPI() async {
     if (mobileTextfieldController.text.isNotEmpty &&
         mobileTextfieldController.text.length == 11) {
-
-      print("getLoginAPI is click");
+      await EasyLoading.show(
+        status: 'در حال پردازش ...',
+        maskType: EasyLoadingMaskType.black,
+      );
       await RequestHelper.makePostRequest(
         controller: 'Customers',
         method: 'startLR',
@@ -50,46 +42,28 @@ class LoginController extends GetxController {
           "customer_mobile": mobileTextfieldController.text,
         },
       ).then(
-        (value) async{
-          await EasyLoading.show(
-            status: 'در حال پردازش ...',
-            maskType: EasyLoadingMaskType.black,
-          );
-          Future.delayed(const Duration(seconds: 2), () async {
-            EasyLoading.dismiss();
-          });
+        (value) {
+          EasyLoading.dismiss();
           if (value.isDone) {
             if (value.data['isRegistered'] == 0) {
-              print("getLoginAPI value.data['isRegistered'] == 0 is done");
-              Future.delayed(const Duration(seconds: 2), () async {
-                pageViewController!.jumpToPage(2);
-              });
-
-              print("jumpToPage(2) is done");
+              pageViewController!.jumpToPage(2);
             } else {
-              Future.delayed(const Duration(seconds: 2), () async {
-                pageViewController!.jumpToPage(1);
-              });
-
-              print("jumpToPage(1) is done");
-              print("value.data['isRegistered'] == 0 is not work");
+              pageViewController!.jumpToPage(1);
             }
-          } else {
-            print("value.isDone is not work");
           }
         },
       );
-    } else {
-
-      print("درخواست کار نمیکنه");
     }
   }
 
   getPinCodeAPI() async {
     if (mobileTextfieldController.text.isNotEmpty &&
         mobileTextfieldController.text.length == 11) {
+      EasyLoading.show(
+        status: 'در حال پردازش ...',
+        maskType: EasyLoadingMaskType.black,
+      );
 
-      print("getLoginAPI is click");
       await RequestHelper.makePostRequest(
         controller: 'Customers',
         method: 'codeValidate',
@@ -98,55 +72,42 @@ class LoginController extends GetxController {
           "code": pinCodeController.text,
         },
       ).then(
-        (value) async{
-          await EasyLoading.show(
-            status: 'در حال پردازش ...',
-            maskType: EasyLoadingMaskType.black,
-          );
-          Future.delayed(const Duration(seconds: 2), () async {
-            EasyLoading.dismiss();
-          });
+        (value) {
+          EasyLoading.dismiss();
           if (value.isDone) {
             if (whichPage == 2) {
-              Future.delayed(const Duration(seconds: 2), () async {
-                Get.toNamed(
-                  '/registerScreen',
-                  arguments: {
-                    "outSideOrderArgument": 2,
-                    "mobileTextfieldController": mobileTextfieldController.text
-                  },
-                );
-              });
-
+              Get.toNamed(
+                '/registerScreen',
+                arguments: {
+                  "outSideOrderArgument": 2,
+                  "mobileTextfieldController": mobileTextfieldController.text
+                },
+              );
             }
-
             if (whichPage == 3) {
-              Future.delayed(const Duration(seconds: 2), () async {
-                Get.toNamed(
-                  '/registerScreen',
-                  arguments: {
-                    "reserveTableArgument": 3,
-                    "mobileTextfieldController": mobileTextfieldController.text
-                  },
-                );
-              });
-
+              Get.toNamed(
+                '/registerScreen',
+                arguments: {
+                  "reserveTableArgument": 3,
+                  "mobileTextfieldController": mobileTextfieldController.text
+                },
+              );
             }
           } else {
-            print("value.isDone is not work");
+            ViewHelper.errorSnackBar(
+              message: 'کد ارسالی اشتباه است',
+            );
           }
         },
       );
-    } else {
-      //TODO:inja error neshon bede
-      print("درخواست کار نمیکنه");
     }
   }
 
-
-
   sendAgainGetPinCodeAPI() async {
-
+    EasyLoading.show(
+      status: 'در حال پردازش ...',
+      maskType: EasyLoadingMaskType.black,
+    );
     RequestHelper.makePostRequest(
       controller: 'Customers',
       method: 'startLR',
@@ -154,28 +115,27 @@ class LoginController extends GetxController {
         "customer_mobile": mobileTextfieldController.text,
       },
     ).then(
-      (value) async{
-        await EasyLoading.show(
-          status: 'در حال پردازش ...',
-          maskType: EasyLoadingMaskType.black,
-        );
-        Future.delayed(const Duration(seconds: 2), () async {
-          EasyLoading.dismiss();
-        });
-        value.isDone;
+      (value) {
+        EasyLoading.dismiss();
+        if (value.isDone) {
+          pageViewController!.jumpToPage(3);
+        } else {
+          ViewHelper.errorSnackBar(
+            message: 'کد ارسالی اشتباه است',
+          );
+        }
       },
     );
-    print("اس ام اس مجددا ارسال شد");
   }
 
-
-
   getPassWordAPI() async {
-    print("متد کار میکنه");
+    final box = GetStorage();
     if (passWordController.text.isNotEmpty &&
-        passWordController.text.length == 8) {
-
-      print("شرط کار میکنه");
+        passWordController.text.length >= 6) {
+      await EasyLoading.show(
+        status: 'در حال پردازش ...',
+        maskType: EasyLoadingMaskType.black,
+      );
       RequestHelper.makePostRequest(
         controller: 'Customers',
         method: 'login',
@@ -184,37 +144,48 @@ class LoginController extends GetxController {
           "password": passWordController.text,
         },
       ).then(
-        (value) async{
-          await EasyLoading.show(
-            status: 'در حال پردازش ...',
-            maskType: EasyLoadingMaskType.black,
-          );
-          Future.delayed(const Duration(seconds: 2), () async {
-            EasyLoading.dismiss();
-          });
+        (value) {
+          EasyLoading.dismiss();
           if (value.isDone) {
-            print("is done password is true");
-
-            if (whichPage == 2) {
-              Future.delayed(const Duration(seconds: 2), () async {
-                Get.offNamed(
-                  '/home',
-                  arguments: 2,
-                );
-              });
-
-            } else if (whichPage == 3) {
-              Future.delayed(const Duration(seconds: 2), () async {
-                Get.offNamed('/reservetable', arguments: 3);
-              });
-
-            }
-          } else {
-            //TODO:inja error neshon bede
-            print("is done password is not true");
+            box.write(
+              'userMobile',
+              mobileTextfieldController.text,
+            );
+            Blocs.user.setData(
+              json: value.data['data'],
+            );
+            getUserData();
           }
         },
       );
+    } else {
+      ViewHelper.errorSnackBar(
+        message: 'رمز عبور شما باید حداقل 6 حرف باشد',
+      );
     }
   }
+
+  getUserData() async {
+      RequestHelper.makePostRequest(
+        body: {
+          'mobile': mobileTextfieldController.text,
+        },
+        controller: 'Customers',
+        method: 'customerInfo',
+      ).then(
+            (value) {
+          if (value.isDone) {
+            Blocs.user.setData(
+              json: value.data,
+            );
+            Get.offNamed(
+              NameRouts.selectKindOrderScreen,
+              arguments: 2,
+            );
+          }
+        },
+      );
+  }
+
+
 }

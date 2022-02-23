@@ -20,6 +20,7 @@ class RegisterScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: SizedBox(
             height: Get.height,
@@ -27,173 +28,147 @@ class RegisterScreen extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                    child: ClipPath(
-                  clipper: CustomClipPath(),
-                  child: Container(
-                    height: double.maxFinite,
-                    width: double.maxFinite,
-                    color: ColorUtils.mainRed,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TopPartOfRegister(
-                          registerController: registerController,
-                        ),
-                        SizedBox(
-                          height: Get.height * .45,
-                          width: Get.width * .8,
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  height: Get.height * .06,
-                                  width: Get.height * .5,
-                                  child: Row(
-                                    children: [
-                                      Flexible(
-                                        flex: 1,
-                                        child: Container(
-                                          color: Colors.transparent,
-                                          height: double.maxFinite,
-                                          width: double.maxFinite,
-                                        ),
-                                      ),
-                                      Flexible(
-                                        flex: 1,
-                                        child: SizedBox(
-                                          height: double.maxFinite,
-                                          width: double.maxFinite,
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                height: Get.height * .015,
-                                                width: Get.width,
-                                                color: Colors.transparent,
-                                              ),
-                                              SizedBox(
-                                                height: Get.height * .04,
-                                                width: Get.width,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.edit,
-                                                      color: Colors.white,
-                                                    ),
-                                                    AutoSizeText(
-                                                      registerController
-                                                          .whichPage[
-                                                              "mobileTextfieldController"]
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                height: Get.height * .0015,
-                                                width: Get.width,
-                                                color: Colors.white,
-                                              ),
-                                            ],
+                  child: ClipPath(
+                    clipper: CustomClipPath(),
+                    child: Container(
+                      height: double.maxFinite,
+                      width: double.maxFinite,
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          TopPartOfRegister(
+                            registerController: registerController,
+                          ),
+                          SizedBox(
+                            height: Get.height * .45,
+                            width: Get.width * .8,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        height: Get.height * .06,
+                                        width: Get.width * .4,
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            bottom: BorderSide(
+                                              width: 0.5,
+                                              color: ColorUtils.mainRed
+                                                  .withOpacity(.5),
+                                            ),
                                           ),
                                         ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            const Icon(
+                                              Icons.edit,
+                                              color: ColorUtils.mainRed,
+                                            ),
+                                            SizedBox(
+                                              width: Get.width * .05,
+                                            ),
+                                            AutoSizeText(
+                                              registerController
+                                                  .mobile!,
+                                              style: const TextStyle(
+                                                color: ColorUtils.textColor,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
+                                    ),
+                                  ),
+                                  // TextButton(onPressed: (){
+                                  //   registerController.getCustomerInfo();
+                                  // }, child: Text('test')),
+                                  NameTextFieldRegister(
+                                    registerController: registerController,
+                                  ),
+                                  PassWordTextFieldRegister(
+                                    registerController: registerController,
+                                  ),
+                                  ChoseGenderRegister(
+                                    registerController: registerController,
+                                  ),
+                                  FinishedButtonRegister(
+                                    registerController: registerController,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          ClipPath(
+                            clipper: CustomClipPath2(),
+                            child: Stack(
+                              children: [
+                                Container(
+                                  height: Get.height * .1,
+                                  width: Get.width,
+                                  color: Colors.transparent,
+                                ),
+                                ClipPath(
+                                  clipper: CustomClipPath2(),
+                                  child: Container(
+                                    height: Get.height * .076,
+                                    width: Get.width,
+                                    color: Colors.red.withOpacity(.3),
                                   ),
                                 ),
-
-                                // TextButton(onPressed: (){
-                                //   registerController.getCustomerInfo();
-                                // }, child: Text('test')),
-                                NameTextFieldRegister(
-                                  registerController: registerController,
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(top: Get.height * .016),
+                                  child: ClipPath(
+                                    clipper: CustomClipPath2(),
+                                    child: Container(
+                                      height: Get.height * .076,
+                                      width: Get.width,
+                                      // color: Color(0xffB72828).withOpacity(.5),
+                                      color: Colors.red.withOpacity(.5),
+                                    ),
+                                  ),
                                 ),
-                                PassWordTextFieldRegister(
-                                  registerController: registerController,
-                                ),
-                                ChoseGenderRegister(
-                                  registerController: registerController,
-                                ),
-                                FinishedButtonRegister(
-                                  registerController: registerController,
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(top: Get.height * .032),
+                                  child: ClipPath(
+                                    clipper: CustomClipPath2(),
+                                    child: Container(
+                                      height: Get.height * .076,
+                                      width: Get.width,
+                                      color: Colors.red.withOpacity(.8),
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                        ClipPath(
-                          clipper: CustomClipPath2(),
-                          child: Stack(
-                            children: [
-                              Container(
-                                height: Get.height * .1,
-                                width: Get.width,
-                                color: Colors.transparent,
-                              ),
-                              ClipPath(
-                                clipper: CustomClipPath2(),
-                                child: Container(
-                                  height: Get.height * .076,
-                                  width: Get.width,
-                                  color: Colors.white.withOpacity(.3),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: Get.height * .016),
-                                child: ClipPath(
-                                  clipper: CustomClipPath2(),
-                                  child: Container(
-                                    height: Get.height * .076,
-                                    width: Get.width,
-                                    // color: Color(0xffB72828).withOpacity(.5),
-                                    color: Colors.white.withOpacity(.5),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(top: Get.height * .032),
-                                child: ClipPath(
-                                  clipper: CustomClipPath2(),
-                                  child: Container(
-                                    height: Get.height * .076,
-                                    width: Get.width,
-                                    color: Colors.white.withOpacity(.8),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
-                SizedBox(
-                  height: Get.height * .14,
-                  width: Get.width,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: SizedBox(
-                      height: Get.height * .12,
-                      width: Get.width,
-                      child: const Image(
-                        fit: BoxFit.fill,
-                        image: AssetImage(
-                          'assets/images/LoginPicture.png',
-                        ),
+                        ],
                       ),
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: Get.height * .1,
+                  width: Get.width,
+                  child: const Image(
+                    fit: BoxFit.fill,
+                    image: AssetImage(
+                      'assets/images/img.png',
+                    ),
+                  ),
+                )
               ],
             ),
           ),

@@ -11,10 +11,6 @@ class FinishedButtonRegister extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return finishedButtonRegister();
-  }
-
-  Widget finishedButtonRegister() {
     return SizedBox(
       height: Get.height * .06,
       width: Get.width * .8,
@@ -24,14 +20,15 @@ class FinishedButtonRegister extends StatelessWidget {
           builder: (_) => GestureDetector(
             onTap: () {
               registerController!.getCompeleteRegister();
-              registerController!.getCustomerInfo();
             },
             child: Container(
               height: Get.height * .047,
               width: Get.width * .4,
               decoration: BoxDecoration(
                 color: const Color(0xffE29805),
-                borderRadius: BorderRadius.circular(Get.height * .03),
+                borderRadius: BorderRadius.circular(
+                  Get.height * .03,
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(.2),

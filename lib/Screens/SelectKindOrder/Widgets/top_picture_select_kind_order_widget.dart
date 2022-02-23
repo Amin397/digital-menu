@@ -18,59 +18,41 @@ class TopPictureSelectKindOrder extends StatelessWidget {
   Widget topPictureSelectKindOrder() {
     return Stack(
       children: [
-        Container(
-          height: Get.height * .25,
+        SizedBox(
+          height: Get.height * .13,
           width: Get.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(
-                Get.height * .08,
-              ),
-              bottomLeft: Radius.circular(
-                Get.height * .08,
-              ),
-            ),
-          ),
           child: Hero(
             tag: 'image-tag',
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(
-                  Get.height * .08,
-                ),
-              ),
-              child: (Blocs.shop.shopModel!.image!.length > 10)
-                  ? Image(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(
-                        Blocs.shop.shopModel!.image!,
-                      ),
-                    )
-                  : const Image(
-                      fit: BoxFit.fill,
-                      image: AssetImage(
-                        'assets/images/shutterstock_282446912.0.0.png',
-                      ),
+            child: (Blocs.shop.shopModel!.image!.length > 10)
+                ? Image(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                      Blocs.shop.shopModel!.image!,
                     ),
-            ),
+                  )
+                : const Image(
+                    fit: BoxFit.fill,
+                    image: AssetImage(
+                      'assets/images/shutterstock_282446912.0.0.png',
+                    ),
+                  ),
           ),
         ),
         Container(
-          height: Get.height * .25,
+          height: Get.height * .13,
           width: Get.width,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(
-                Get.height * .08,
-              ),
-            ),
             color: Colors.black45.withOpacity(.4),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: EdgeInsets.only(top: Get.height * .08),
+        Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: Get.width * .05,
+          ),
+          height: Get.height * .13,
+          width: Get.width,
+          child: Align(
+            alignment: Alignment.centerRight,
             child: AutoSizeText(
               Blocs.shop.shopModel!.brandName.toString(),
               style: const TextStyle(

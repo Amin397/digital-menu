@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ProductModel {
   ProductModel({
     this.id,
@@ -25,7 +27,7 @@ class ProductModel {
   });
 
   int? id;
-  int count;
+  RxInt count;
   int? contractorCategoryId;
   int? contractorSubcategoryId;
   int? productCategoryId;
@@ -68,7 +70,7 @@ class ProductModel {
     maximumOrderCount: json["maximum_order_count"],
     contractorProductCategoryName: json["contractor_product_category_name"],
     contractorProductCategoryId: json["contractor_product_category_id"],
-    count: 0,
+    count: 0.obs,
     sumPrice: '',
   );
 

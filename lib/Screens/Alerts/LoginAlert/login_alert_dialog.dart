@@ -77,6 +77,7 @@ class LoginAlertDialog extends StatelessWidget {
               flex: 2,
               child: GestureDetector(
                 onTap: () {
+                  Get.toNamed('/loginscreen', arguments: 3);
                   // Get.toNamed(NameRouts.signinMobile);
                 },
                 child: Container(

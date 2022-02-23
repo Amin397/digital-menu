@@ -16,13 +16,12 @@ class RestaurantModel {
     this.tableReservation,
     this.logo,
     this.image,
-    this.hasGateway,
     this.reservationTime,
+    this.hasGateway,
+    this.cashback,
   });
 
   int? id;
-  int? hasGateway;
-  int? reservationTime;
   String? brandName;
   String? categoryId;
   List<String>? subCategories;
@@ -38,6 +37,9 @@ class RestaurantModel {
   int? tableReservation;
   String? logo;
   String? image;
+  int? reservationTime;
+  int? hasGateway;
+  int? cashback;
 
   factory RestaurantModel.fromJson(Map<String, dynamic> json) => RestaurantModel(
     id: json["id"],
@@ -56,8 +58,9 @@ class RestaurantModel {
     tableReservation: json["tableReservation"],
     logo: json["logo"],
     image: json["image"],
-    hasGateway: json["hasGateway"],
     reservationTime: json["reservation_time"],
+    hasGateway: json["hasGateway"],
+    cashback: json["cashback"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -77,5 +80,8 @@ class RestaurantModel {
     "tableReservation": tableReservation,
     "logo": logo,
     "image": image,
+    "reservation_time": reservationTime,
+    "hasGateway": hasGateway,
+    "cashback": cashback,
   };
 }

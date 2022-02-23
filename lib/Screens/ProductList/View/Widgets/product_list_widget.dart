@@ -154,17 +154,14 @@ class ProductListWidget extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.centerRight,
-                child: GetBuilder(
-                  init: controller,
-                  builder: (ctx) {
-                    return AnimatedSwitcher(
+                child: Obx(() => AnimatedSwitcher(
                       duration: const Duration(milliseconds: 200),
                       transitionBuilder: (
                         widget,
                         animation,
                       ) =>
                           ScaleTransition(scale: animation, child: widget),
-                      child: (item.count == 0)
+                      child: (item.count.value == 0)
                           ? Align(
                               key: UniqueKey(),
                               alignment: Alignment.centerRight,
@@ -277,9 +274,7 @@ class ProductListWidget extends StatelessWidget {
                                 ],
                               ),
                             ),
-                    );
-                  },
-                ),
+                    )),
               )
 
               // StreamBuilder(

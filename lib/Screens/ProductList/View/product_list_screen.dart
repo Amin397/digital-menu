@@ -41,7 +41,8 @@ class ProductListScreen extends StatelessWidget {
                                     ? Image(
                                         fit: BoxFit.contain,
                                         image: NetworkImage(
-                                            controller.model!.icon!),
+                                          controller.model!.icon!,
+                                        ),
                                       )
                                     : const Image(
                                         fit: BoxFit.fill,
@@ -75,7 +76,9 @@ class ProductListScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              ProductListWidget(controller: controller,),
+              ProductListWidget(
+                controller: controller,
+              ),
               const FinishedButtonSingle(),
             ],
           ),

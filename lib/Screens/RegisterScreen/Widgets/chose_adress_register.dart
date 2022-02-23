@@ -2,6 +2,7 @@ import 'package:auto_size_text_pk/auto_size_text_pk.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:untitled13/Const/color_utils.dart';
 import 'package:untitled13/Screens/RegisterScreen/Controller/register_controller.dart';
 
 class ChoseGenderRegister extends StatelessWidget {
@@ -26,10 +27,15 @@ class ChoseGenderRegister extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Padding(
-                padding: EdgeInsets.only(right: Get.width * .08),
+                padding: EdgeInsets.only(
+                  right: Get.width * .08,
+                ),
                 child: const AutoSizeText(
                   "جنسیت",
-                  style: TextStyle(color: Colors.white, fontSize: 14),
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
             ),
@@ -58,10 +64,10 @@ class ChoseGenderRegister extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: (registerController!
                                           .gendersList[index].isGender!)
-                                      ? const Color(0xffE29805)
+                                      ? Colors.red
                                       : Colors.transparent,
                                   border:
-                                      Border.all(color: Colors.white, width: 2),
+                                      Border.all(color: Colors.red, width: 2),
                                   borderRadius:
                                       BorderRadius.circular(Get.height * .032),
                                 ),
@@ -70,7 +76,7 @@ class ChoseGenderRegister extends StatelessWidget {
                           AutoSizeText(
                             registerController!.gendersList[index].genderName!,
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: ColorUtils.textColor,
                               fontSize: 14,
                             ),
                           ),
